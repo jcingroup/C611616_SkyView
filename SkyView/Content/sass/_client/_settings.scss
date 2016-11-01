@@ -1,0 +1,119 @@
+﻿@charset "UTF-8";
+
+
+// == config
+// ----------------------------------------------------------------------
+$img-path:              '../images' !default;
+$font-path:             '../font' !default;
+$index:                 false !default;           // 首頁用
+$page:                  false !default;           // 內頁用
+
+
+// == helper/variables
+// ----------------------------------------------------------------------
+$body-bg:               #F6F5F0 !default;
+$body-color:            #595959;
+$font-family-sp:        'Fenix', serif;
+// $link-color:            darken($brand-primary,5);
+
+$font-size-h1:          45px;
+$headings-color:        $brand-primary !default;
+
+
+// == layout
+// ----------------------------------------------------------------------
+$min-width:             1008px;     // 網頁最小尺寸
+$max-width:             1200px;     // 網頁最寬尺寸: .wrap
+$menu-item:             'AboutUs' 'Info' 'Products' 'Story' 'ContactUs';
+
+$wrapper-bg:            url(#{$img-path}/footBg.gif) no-repeat center bottom, url(#{$img-path}/bg.gif) repeat-x 0 bottom !default;
+$content-spacing:       120px !default;
+
+// header
+$header-height:         165px !default;
+$header-bg:             #fff url(#{$img-path}/headerBg.gif) repeat-x 0 100px !default;
+
+// banner
+$banner-height:         350px !default;
+
+// logo
+$logo-img:              'logo.gif' !default; // 'logo.gif' or false
+$logo-size:             306px 68px !default;
+
+// footer
+$footer-height:         250px !default;
+$footer-bg:             false !default;
+$footer-color:          darken($brand-primary,10) !default; //#63889D;
+
+// z-index
+$z-index: (
+    header:             1,
+    main:               2,
+    footer:             5,
+    sidebar:            4,
+    banner:             3,
+    logo:               10,
+    menu:               20,
+    figure:             1,
+    dropdown:           21,
+    tooltip:            22,
+    modal:              23,
+    toggle:             25,
+    goTop:              99,
+    overlay:            999
+);
+
+
+// == unit
+// ----------------------------------------------------------------------
+// btn
+$btn-border-radius:            false;
+$btn-pd:                       8px 20px;
+$btn-hover-bg:                 darken($brand-secondary,15);
+$btn-styles: (
+    text-shadow: 1px 1px 1px rgba(#000,.35)
+);
+
+// figure
+$figure-inline:                true;
+$figure-inline-hack:           false;
+
+
+// == base
+// ----------------------------------------------------------------------
+// table
+$table-border-color:           lighten($brand-secondary,15);
+$table-bordered:               true;
+// $table-align:                  false;
+$table-pd:                     4px 10px;
+$table-margin-bottom:          false;
+// $table-bg-accent:              lighten(#CAE4EF,5); // darken($muted,3)
+// $table-bg-hover:               $pale-yellow;
+$th-styled: (
+   color: darken($brand-primary,10),
+   background: lighten($brand-primary,52)
+);
+// $td-styled: (
+//     background: lighten(#EBEBEB,5)
+// );
+// $tfoot-styled:(
+//     background: $pale-yellow
+// );
+// $td-item-styled: (
+//     text-align: center,
+//     background: lighten(#B3E9F5,10)
+// );
+
+// form
+$input-border-focus:            darken($amber,5);
+$input-placeholder:             lighten($body-color,20);
+$input-bg:                      lighten($warning,18);
+$input-border-color:            lighten($brand-secondary,15);
+
+$form-element-radius:           false;
+$enable-input-underline:        true;
+
+$input-group-addon-color:       lighten($brand-primary,65);
+$input-group-addon-bg:          darken($amber,12);
+$input-group-addon-size:        23px;
+$input-group-border:            1px solid #ddd;

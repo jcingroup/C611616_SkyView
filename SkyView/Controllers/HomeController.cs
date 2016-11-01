@@ -13,17 +13,39 @@ namespace SkyView.Controllers
             return View();
         }
 
-        public ActionResult About()
+        // 俯瞰桃園之美
+        public ActionResult OverlookAll()
         {
-            ViewBag.Message = "Your application description page.";
-
+            return View();
+        }
+        public ActionResult OverlookMap()
+        {
+            return View();
+        }
+        public ActionResult OverlookContent()
+        {
             return View();
         }
 
-        public ActionResult Contact()
+        // 360環景
+        public ActionResult SweepingList()
         {
-            ViewBag.Message = "Your contact page.";
+            return View();
+        }
+        public ActionResult SweepingContent()
+        {
+            return View();
+        }
 
+        // 關於本站
+        public ActionResult AboutUs()
+        {
+            return View();
+        }
+
+        // 網站導覽
+        public ActionResult SiteMap()
+        {
             return View();
         }
     }

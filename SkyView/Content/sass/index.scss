@@ -1,0 +1,139 @@
+@charset "UTF-8";
+
+// 本頁專用變數(覆蓋)
+// ------------------------------------------------------------
+$index:                  true;
+$img-index:              '../images/index';
+
+$body-bg:                #161A0D;
+$font-size-h3:           30px;
+$headings-color:         #fff;
+
+$figcaption-full:        true;
+
+
+
+// import
+// ------------------------------------------------------------
+// 本次專案專用變數
+@import "_client/color";
+@import "_client/settings";
+
+// 共用
+@import "helper/function";
+@import "helper/variables";
+@import "helper/mixins";
+
+// 由此 output css
+@import "vendor/normalize"; // 重置復位
+@import "vendor/print";     // 列印樣式
+
+@import "base/basic";
+@import "base/util";
+
+// 本頁專用
+@import "_client/unit/figure";
+@import "_client/unit/classes";
+
+
+// main
+// ------------------------------------------------------------
+.video-full {
+    @include size(100%);
+    position: relative;
+    margin: auto;
+    overflow: hidden;
+}
+video { opacity: .75; }
+
+main {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1122px;
+    margin-left: -560px;
+    margin-top: -155px;
+}
+
+h1, h2 { @extend %text-hide, .m-b-0; }
+
+figure {
+    @extend .m-a-0;
+    width: 530px;
+    height: 310px;
+
+    @include transition(transform .5s, box-shadow .7s);
+
+    &:hover, &:active {
+        @include transform(translate(-5px,-10px));
+        box-shadow: 10px 10px 15px rgba(0, 0, 0, .5);
+    }
+}
+
+// 朝敏菓菜
+.site1 {
+    @extend %float-l;
+    border: 1px solid #769F35;
+    background: #fff url(#{$img-index}/site1_bg.gif) 0 0 repeat-x;
+
+    figcaption {
+        background: url(#{$img-index}/site1_bg2.gif) 15px 72px no-repeat;
+    }
+    h1 {
+        background: url(#{$img-index}/site1_logo.png) 157px 0 no-repeat;
+        height: 189px;
+        margin-top: 16px;
+    }
+    h2 {
+        background: url(#{$img-index}/site1_slogan.gif) center 0 no-repeat;
+        height: 62px;
+    }
+    h5 {
+        font-size: em(18);
+        font-weight: bold;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
+    }
+    small {
+        padding-left: 16px;
+        margin-left: 16px;
+        border-left: 1px solid #E5E5E5;
+        color: #E5E5E5;
+    }
+    footer {
+        @extend .text-white, .p-y-8;
+        @include absolute(bottom 0 left 0);
+        background: #769F35;
+        width: 100%;
+    }
+}
+// 朝敏貿易
+.site2 {
+    @extend %float-r;
+    border: 3px solid #F0EFE9;
+    background: #fff url(#{$img-index}/site2_bg.gif) 0 0 no-repeat;
+
+    h1 {
+        background: url(#{$img-index}/site2_logo.gif) 0 0 no-repeat;
+        width: 302px;
+        height: 139px;
+        margin-top: 82px;
+        margin-left: 15px;
+    }
+    h2 {
+        background: url(#{$img-index}/site2_slogan.gif) center center no-repeat;
+        width: 59px;
+        height: 106px;
+        @include absolute(top 11px right 21px);
+    }
+}
+
+.copyright {
+    font-size: .8125em;
+    color: #fff;
+    letter-spacing: 2px;
+    position: absolute;
+    bottom: 8%; left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+}

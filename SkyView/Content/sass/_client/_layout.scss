@@ -1,0 +1,167 @@
+@charset "UTF-8";
+
+
+/*      layout
+-----------------------------------------------------------------------*/
+// 置中(有最大寬度限制,非滿版才需要)
+%center {
+    max-width: $max-width;
+    margin: 0 $gutter*3;
+    @include mq(wide) { margin: 0 auto; }
+
+    @if $enable-RWD {
+        @include mq-max(tablet) { margin: 0; }
+    }
+    @else {
+        @include mq-max(break(wide,-1)) {
+            margin: 0;
+            padding-left: $gutter*2;
+            padding-right: $gutter*2;
+        }
+    }
+}
+// 容器
+%contain {
+    @extend %clearfix;
+
+    @if $enable-RWD {
+        @include mq-max(tablet) {
+            padding-left: $gutter;
+            padding-right: $gutter;
+        }
+    } @else {
+        min-width: $min-width;
+    }
+}
+
+.wrap {
+    @extend %center;
+    @extend %contain;
+}
+
+.container {
+    @extend %clearfix;
+    padding: $gutter;
+}
+
+#header, #footer, #main {
+    @extend %contain;
+    position: relative;
+}
+
+#wrapper {
+    @if $lte7 { _height: 100%; }
+    min-height: 100%;
+    padding-bottom: $footer-height + $content-spacing; // 內容與footer間距
+
+    @if $wrapper-bg {
+        background: $wrapper-bg;
+    }
+
+    @if not $enable-RWD {
+        min-width: $min-width;
+    }
+}
+
+// header
+// ----------------------------------------------------------------------
+#header {
+    @if $header-bg { background: $header-bg; }
+    height: $header-height;
+    z-index: z(header);
+
+    // 本次專案
+    .wrap { position: relative; }
+    @if $index {
+        box-shadow: 0 10px 0 rgba($brand-secondary,.6);
+    }
+    @if $page {
+        box-shadow: 0 6px 0 rgba($brand-secondary,.55);
+    }
+}
+
+.logo {
+    cursor: pointer; cursor: hand; // for ie
+    z-index: z(logo);
+
+    @if $logo-img {
+        @include text-pic($logo-img, nth($logo-size,1), nth($logo-size,2), $position:center);
+    }
+
+    // 本次專案
+    @extend %float-l;
+    position: relative;
+    top: 18px;
+}
+
+
+// footer 頁腳
+// ----------------------------------------------------------------------
+#footer {
+    @if $footer-bg { background: $footer-bg; }
+    min-height: $footer-height;
+    margin-top: -($footer-height);
+    z-index: z(footer);
+
+    // 本次專案樣式
+    color: $brand-primary;
+}
+.logo-s {
+    @extend %inline-block;
+    @include text-pic('logo_s.gif', 171px, 21px);
+    vertical-align: middle;
+}
+.foot-contact {
+    position: relative;
+    padding-top: 28px;
+    padding-bottom: 28px;
+
+    @include el(all) {
+        @include pos-center(x);
+        width: 720px;
+        height: 1px;
+        background: lighten($brand-primary,15);
+    }
+    &::before { top: 0; }
+    &::after  { bottom: 0; }
+
+    dt {
+        font-size: em(21);
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    span, dd {
+        @extend %inline-block, .font-sp, .m-a-0;
+        line-height: 1.001;
+    }
+    dd {
+        @extend .p-x-12;
+        font-size: em(18);
+        &:not(:first-of-type) { border-left: 1px solid $brand-primary; }
+    }
+    span {
+        @extend .p-l-8;
+        vertical-align: middle;
+    }
+}
+.foot-social {
+    a {
+        @extend %inline-block, .m-x-4;
+        @include text-pic('icon-social.gif', 42px, 43px);
+
+        &:nth-child(2) { background-position: -55px 0; }
+        &:nth-child(3) { background-position: -110px 0; }
+    }
+}
+
+// main
+// ----------------------------------------------------------------------
+#main {
+    padding-top: 80px;
+    @if $index {
+        background: url(#{$img-index}/mainBg.gif) center 0 no-repeat;
+    }
+    @if $page {
+        @extend %center;
+    }
+}
