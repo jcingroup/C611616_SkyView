@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebUser.Controller;
 
 namespace SkyView.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : WebUserController
     {
         public ActionResult Index()
         {
+            ViewBag.IsFirstPage = true;
             return View();
         }
-
+        public RedirectResult Login()
+        {
+            return Redirect("~/Base/Index");
+        }
         // 俯瞰桃園之美
         public ActionResult OverlookAll()
         {
