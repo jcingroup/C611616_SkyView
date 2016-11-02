@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace SkyView
+namespace Demo
 {
     public class RouteConfig
     {
@@ -18,7 +18,6 @@ namespace SkyView
               url: "_SysAdm",
               defaults: new { controller = "Home", action = "Login" }
               ).DataTokens["UseNamespaceFallback"] = false;
-
 
             routes.MapRoute(
                 name: "Default",
