@@ -14,6 +14,12 @@ namespace SkyView
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+              name: "Manager",
+              url: "_SysAdm",
+              defaults: new { controller = "Home", action = "Login" }
+              ).DataTokens["UseNamespaceFallback"] = false;
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
