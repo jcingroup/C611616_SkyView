@@ -100,6 +100,7 @@
     <Content Include="Content\font\fontAwesome\fontawesome-webfont.svg" />
     <Content Include="Content\font\icomoon\icomoon.svg" />
     <Content Include="Content\font\themify-icons\themify.svg" />
+    <Content Include="Content\images\index\logo.gif" />
     <Content Include="Content\js\bootstrap\collapse.js" />
     <Content Include="Content\js\bootstrap\dropdown.js" />
     <Content Include="Content\js\bootstrap\util.js" />
@@ -150,8 +151,6 @@
     <Content Include="Views\Shared\_LayoutManage.cshtml" />
     <Content Include="Views\Manage\OverlookList.cshtml" />
     <Content Include="Views\Manage\OverlookData.cshtml" />
-    <Content Include="Views\Manage\OverviewList.cshtml" />
-    <Content Include="Views\Manage\OverviewData.cshtml" />
     <Content Include="Views\Manage\ChangePW.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

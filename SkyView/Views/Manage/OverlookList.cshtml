@@ -1,7 +1,100 @@
 ﻿
 @{
-    ViewBag.Title = "OverlookList";
+    Layout = "~/Views/Shared/_LayoutManage.cshtml";
+    ViewBag.BodyClass = "Overlook";
+    ViewBag.Crumb = "景點資料維護";
 }
 
-<h2>OverlookList</h2>
+@section Breadcrumb {
+    <li><i class="fa-caret-right"></i> 空拍景點管理</li>
+    <li><i class="fa-angle-right"></i> @ViewBag.Crumb</li>
+}
 
+<h3 class="h3">@ViewBag.Crumb</h3>
+
+<header class="table-header">
+    <div class="table-filter">
+        <div class="form-inline">
+            <label class="text-sm">地區</label> @* 如要顯示文字: 把 sr-only 拿掉 *@
+            <input type="text" class="form-control form-control-sm" placeholder="請輸入關鍵字...">
+            <label class="text-sm">景點</label> @* 如要顯示文字: 把 sr-only 拿掉 *@
+            <input type="text" class="form-control form-control-sm" placeholder="請輸入關鍵字...">
+        </div>
+    </div><!-- table-filter //-->
+</header>
+
+<table class="table table-sm table-bordered table-striped table-hover">
+    <colgroup>
+        <col span="2" style="width: 7%">
+        <col style="width: 16%">
+        <col>
+        <col style="width: 14%">
+    </colgroup>
+    <thead>
+        <tr>
+            <th class="text-xs-center">刪除</th> @* 文字置中: class="text-xs-center" / 置右: class="text-xs-right" *@
+            <th class="text-xs-center">修改</th>
+            <th>
+                <button class="text-xs-center th-sort-toggle">地區</button>
+            </th>
+            <th>
+                @* 如不需要排序功能: 純文字即可 *@
+                景點名稱
+            </th>
+            <th>
+                @* 點選排序功能 (點一下遞增 asc, 點兩下遞減 desc) *@
+                <button class="text-xs-center th-sort-toggle asc">狀態</button>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @* 建議: 1頁10筆資料 *@
+        <tr>
+            <td class="text-xs-center">
+                <button class="btn btn-link btn-lg text-danger"><i class="fa-times"></i></button>
+            </td>
+            <td class="text-xs-center">
+                <button type="button" class="btn btn-link btn-lg" onclick="location.href='OverlookData'"><i class="fa-pencil"></i></button>
+            </td>
+            <td class="text-xs-center">大園區</td>
+            <td>海湖靶場</td>
+            <td class="text-xs-center"><span class="w3-tag label-success w3-round">顯示</span></td>
+        </tr>
+        <tr>
+            <td class="text-xs-center">
+                <button class="btn btn-link btn-lg text-danger"><i class="fa-times"></i></button>
+            </td>
+            <td class="text-xs-center">
+                <button type="button" class="btn btn-link btn-lg" onclick="location.href='OverlookData'"><i class="fa-pencil"></i></button>
+            </td>
+            <td class="text-xs-center">中壢區</td>
+            <td>老街溪口</td>
+            <td class="text-xs-center"><span class="w3-tag label-default w3-round">隱藏</span></td>
+        </tr>
+    </tbody>
+</table>
+<footer class="table-footer clearfix">
+    <button type="button" class="btn btn-sm btn-success pull-xs-left" onclick="location.href='OverlookData'">
+        <i class="fa-plus-circle"></i> 新增
+    </button>
+    <small class="pull-xs-right">第 1-10 筆，共 20 筆</small>
+    <ul class="pager pager-sm">
+        <li>
+            <a href=""><i class="fa-angle-double-left"></i></a>
+        </li>
+        <li>
+            <a href=""><i class="fa-angle-left"></i></a>
+        </li>
+        <li class="form-inline">
+            <label>第</label>
+            <input type="text" class="form-control form-control-sm text-xs-center" style="width:100px">
+            <label>頁，共 2 頁</label>
+        </li>
+        <li>
+            <a href=""><i class="fa-angle-right"></i></a>
+        </li>
+        <li>
+            <a href=""><i class="fa-angle-double-right"></i></a>
+        </li>
+    </ul>
+</footer>

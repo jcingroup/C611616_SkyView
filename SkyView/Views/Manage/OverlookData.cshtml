@@ -1,7 +1,120 @@
 ﻿
 @{
-    ViewBag.Title = "OverlookData";
+    Layout = "~/Views/Shared/_LayoutManage.cshtml";
+    ViewBag.BodyClass = "Overlook";
+    ViewBag.Crumb = "景點資料維護";
 }
 
-<h2>OverlookData</h2>
+@section Breadcrumb {
+    <li><i class="fa-caret-right"></i> 空拍景點管理</li>
+    <li><i class="fa-angle-right"></i> @ViewBag.Crumb</li>
+}
 
+<h3 class="h3">@ViewBag.Crumb<small class="sub"><i class="fa-angle-double-right"></i> 編輯</small></h3>
+
+<form action="" class="form form-sm">
+    <section class="col-xs-6 m-b-1">
+        <div class="form-group row">
+            <label class="col-xs-2 form-control-label text-xs-right">
+                地區
+            </label>
+            <div class="col-xs-10">
+                <select class="form-control form-control-sm" required>
+                    <option>-請選擇景點-</option>
+                    @* 桃園市共13區 *@
+                    <option>桃園區</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-xs-2 form-control-label text-xs-right">
+                景點名稱
+            </label>
+            <div class="col-xs-10">
+                <input type="text" class="form-control form-control-sm" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-xs-2 form-control-label text-xs-right">
+                google座標
+            </label>
+            <div class="col-xs-10">
+                <div class="input-group">
+                    <span class="input-group-addon">緯度</span>
+                    <input type="text" class="form-control form-control-sm" required>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">經度</span>
+                    <input type="text" class="form-control form-control-sm" required>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-xs-2 form-control-label text-xs-right">
+                狀態
+            </label>
+            <div class="col-xs-10">
+                <label class="c-input c-radio">
+                    <input type="radio" name="show" checked>
+                    <span class="c-indicator"></span>
+                    <span class="text-sm">顯示</span>
+                </label>
+                <label class="c-input c-radio m-r-0">
+                    <input type="radio" name="show">
+                    <span class="c-indicator"></span>
+                    <span class="text-sm">隱藏</span>
+                </label>
+            </div>
+        </div>
+    </section>
+
+    <section class="col-xs-6 m-b-1">
+        <div class="form-group row">
+            <label class="col-xs-2 form-control-label text-xs-right">
+                景點小圖
+            </label>
+            <div class="col-xs-10">
+                @* 瀏覽&上傳檔案 *@
+                <input type="file" class="form-control" name="pic" accept="image/*">
+                @* 照片縮圖 *@
+                <ol class="upload-img list-inline">
+                    <li>
+                        <button class="close">&times;</button> @* 刪除圖片的按鈕 *@
+                        <img src="" alt="">
+                    </li>
+                </ol>
+                <small class="text-muted">可上傳 1 張照片，建議尺寸 80 * 54 px，每張圖最大不可超過 1MB</small>
+            </div>
+        </div><!-- form-group //-->
+        <div class="form-group row">
+            <label class="col-xs-2 form-control-label text-xs-right">
+                景點大圖
+            </label>
+            <div class="col-xs-10">
+                @* 瀏覽&上傳檔案 *@
+                <input type="file" class="form-control" name="pic" accept="image/*">
+                @* 照片縮圖 *@
+                <ol class="upload-img list-inline">
+                    <li>
+                        <button class="close">&times;</button> @* 刪除圖片的按鈕 *@
+                        <img src="" alt="">
+                    </li>
+                </ol>
+                <small class="text-muted">可上傳多張照片，建議尺寸 925 * 616 px，每張圖最大不可超過 2MB</small>
+            </div>
+        </div><!-- form-group //-->
+    </section>
+
+    <h4 class="h4">景點說明</h4>
+    @* 編輯器 *@
+    <textarea class="form-control" rows="8" placeholder="請輸入景點說明"></textarea>
+
+    <div class="form-action">
+        <button type="button" class="btn btn-primary btn-sm col-xs-offset-1" onclick="location.href='OverlookList'">
+            <i class="fa-check"></i> 存檔確認
+        </button>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='OverlookList'">
+            <i class="fa-times"></i> 回列表
+        </button>
+    </div>
+</form>

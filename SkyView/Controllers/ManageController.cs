@@ -31,16 +31,6 @@ namespace SkyView.Controllers
             return View();
         }
 
-        // 環景
-        public ActionResult OverviewList()
-        {
-            return View();
-        }
-        public ActionResult OverviewData()
-        {
-            return View();
-        }
-
         // 變更密碼
         public ActionResult ChangePW()
         {

@@ -1,40 +1,74 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>@ViewBag.Title::桃園新視界 AWESOME TaoYuan-都市發展局</title>
+    <link rel="stylesheet" href="~/Content/css/grid.css">
+    @if (ViewBag.IsFirstPage)
+    {
+        <link rel="stylesheet" href="~/Content/css/index.css">
+    }
+    else
+    {
+        <link rel="stylesheet" href="~/Content/css/page.css">
+    }
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                </ul>
-            </div>
-        </div>
-    </div>
+<body class="@ViewBag.BodyClass">
+    <div id="wrapper">
+        <header id="header">
+            <h1 class="logo" onclick="location.href='@Url.Content("~/Home")'" title="回首頁" tabindex="-1">
+                桃園新視界 AWESOME TaoYuan-都市發展局
+            </h1>
+            <nav id="menu" class="navbar">
+                <a href="~/Home/OverlookArea" class="@(ViewBag.BodyClass == "Overlook" ? "current" : "")">俯瞰桃園之美</a>
+                <a href="~/Home/OverviewList" class="@(ViewBag.BodyClass == "Overview" ? "current" : "")">360°環景</a>
+                <a href="~/Home/AboutUs" class="@(ViewBag.BodyClass == "AboutUs" ? "current" : "")">關於本站</a>
+                <a href="~/Home/Sitemap" class="@(ViewBag.BodyClass == "Sitemap" ? "current" : "")">網站導覽</a>
+            </nav>
+        </header>
 
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+        <main id="main">
+            @RenderBody()
+        </main>
 
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
+    </div><!-- wrapper //-->
+
+    <footer id="footer">
+        <div class="wrap">
+            <section class="col-9 foot-nav">
+                <h2 class="col-2">桃園市<small>區域導覽</small></h2>
+                <nav class="col-10">
+                    <a href="~/Home/OverlookMap">復興區</a>
+                    <a href="~/Home/OverlookMap">龍潭區</a>
+                    <a href="~/Home/OverlookMap">蘆竹區</a>
+                    <a href="~/Home/OverlookMap">桃園區</a>
+                    <a href="~/Home/OverlookMap">觀音區</a>
+                    <a href="~/Home/OverlookMap">大園區</a>
+                    <a href="~/Home/OverlookMap">楊梅區</a>
+                    <a href="~/Home/OverlookMap">平鎮區</a>
+                    <a href="~/Home/OverlookMap">新屋區</a>
+                    <a href="~/Home/OverlookMap">龜山區</a>
+                    <a href="~/Home/OverlookMap">大溪區</a>
+                    <a href="~/Home/OverlookMap">中壢區</a>
+                </nav>
+            </section>
+
+            <address class="col-3 foot-contact">
+                <p>桃園市政府都市發展局</p>
+                <p>33001 桃園市桃園區縣府路1號2樓</p>
+                <p><em>TEL:</em>03-3322101#5780</p>
+                <p><em>E-MAIL:</em><a href="mailto:10007260@mail.tycg.gov.tw">10007260@mail.tycg.gov.tw</a><p>
+            </address>
+        </div><!-- wrap -->
+
+        <div class="copyright">2016 &copy; Taoyuan City</div>
+    </footer><!-- footer -->
+
+    <script src="~/Content/js/common.js"></script>
+    @RenderSection("scripts", required: false)
 </body>
 </html>
