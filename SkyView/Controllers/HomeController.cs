@@ -15,5 +15,10 @@ namespace SkyView.Controllers
             ViewBag.IsFirstPage = true;
             return View();
         }
+        // 導向後台首頁(登入頁)
+        public RedirectResult Login()
+        {
+            return Redirect("~/Manage");
+        }
     }
 }

@@ -89,9 +89,40 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\grid.css" />
+    <Content Include="Content\css\index.css" />
+    <Content Include="Content\css\page.css" />
+    <Content Include="Content\css\sys.css" />
+    <Content Include="Content\css\vendor\fontAwesome\font-awesome.css" />
+    <Content Include="Content\css\vendor\icomoon.css" />
+    <Content Include="Content\css\vendor\typeahead.css" />
+    <Content Include="Content\css\vendor\w3.css" />
+    <Content Include="Content\font\fontAwesome\fontawesome-webfont.svg" />
+    <Content Include="Content\font\icomoon\icomoon.svg" />
+    <Content Include="Content\font\themify-icons\themify.svg" />
+    <Content Include="Content\js\bootstrap\collapse.js" />
+    <Content Include="Content\js\bootstrap\dropdown.js" />
+    <Content Include="Content\js\bootstrap\util.js" />
+    <Content Include="Content\js\common.js" />
+    <Content Include="Content\js\jquery.lazyload.min.js" />
+    <Content Include="Content\js\magnific-popup\jquery.magnific-popup.js" />
+    <Content Include="Content\js\magnific-popup\jquery.magnific-popup.min.js" />
+    <Content Include="Content\js\swiper\swiper.min.js" />
+    <Content Include="Content\js\tab.js" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\font\fontAwesome\fontawesome-webfont.eot" />
+    <Content Include="Content\font\fontAwesome\fontawesome-webfont.ttf" />
+    <Content Include="Content\font\fontAwesome\fontawesome-webfont.woff" />
+    <Content Include="Content\font\fontAwesome\fontawesome-webfont.woff2" />
+    <Content Include="Content\font\fontAwesome\FontAwesome.otf" />
+    <Content Include="Content\font\icomoon\icomoon.eot" />
+    <Content Include="Content\font\icomoon\icomoon.ttf" />
+    <Content Include="Content\font\icomoon\icomoon.woff" />
+    <Content Include="Content\font\themify-icons\themify.eot" />
+    <Content Include="Content\font\themify-icons\themify.ttf" />
+    <Content Include="Content\font\themify-icons\themify.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -115,6 +146,13 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Manage\Login.cshtml" />
+    <Content Include="Views\Shared\_LayoutManage.cshtml" />
+    <Content Include="Views\Manage\OverlookList.cshtml" />
+    <Content Include="Views\Manage\OverlookData.cshtml" />
+    <Content Include="Views\Manage\OverviewList.cshtml" />
+    <Content Include="Views\Manage\OverviewData.cshtml" />
+    <Content Include="Views\Manage\ChangePW.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -124,8 +162,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\" />
-    <Folder Include="Views\Manage\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

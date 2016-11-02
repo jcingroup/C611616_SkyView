@@ -243,3 +243,5 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/SkyView/Content/sass
+/SkyView/Content/sass-sys
