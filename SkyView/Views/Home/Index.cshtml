@@ -1,7 +1,32 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "WELCOM";
 }
 
-<h2>Index</h2>
+@section css {
+    <link rel="stylesheet" href="~/Content/css/vendor/swiper.min.css">
+}
+@section scripts {
+    <script src="~/Content/js/swiper/swiper.min.js"></script>
+    <script>
+        var swiper = new Swiper('#banner', {
+            autoplay: 5000,
+            speed: 1000,
+            effect: 'coverflow',
+            autoplayDisableOnInteraction: false
+        });
+    </script>
+}
 
+<div id="banner" class="swiper-container">
+    <ul class="swiper-wrapper">
+        <li class="swiper-slide">
+            <img src="~/Content/images/index/pic.jpg" alt="首頁輪播圖Demo">
+            <h3>大園區 <small>竹圍漁港</small></h3>
+        </li>
+        <li class="swiper-slide">
+            <img src="~/Content/images/index/pic2.jpg" alt="首頁輪播圖Demo">
+            <h3>大園區 <small>竹圍漁港與彩虹橋</small></h3>
+        </li>
+    </ul>
+</div>

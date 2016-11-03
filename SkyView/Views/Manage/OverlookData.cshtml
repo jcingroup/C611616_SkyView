@@ -3,6 +3,8 @@
     Layout = "~/Views/Shared/_LayoutManage.cshtml";
     ViewBag.BodyClass = "Overlook";
     ViewBag.Crumb = "景點資料維護";
+    ViewBag.nav = "n1";
+    ViewBag.subNav = "sn1-1";
 }
 
 @section Breadcrumb {
@@ -39,7 +41,7 @@
                 google座標
             </label>
             <div class="col-xs-10">
-                <div class="input-group">
+                <div class="input-group margin-space-s">
                     <span class="input-group-addon">緯度</span>
                     <input type="text" class="form-control form-control-sm" required>
                 </div>
@@ -100,7 +102,7 @@
                         <img src="" alt="">
                     </li>
                 </ol>
-                <small class="text-muted">可上傳多張照片，建議尺寸 925 * 616 px，每張圖最大不可超過 2MB</small>
+                <small class="text-muted">可上傳多張照片，建議尺寸 1035 * 690 px，每張圖最大不可超過 500kb</small>
             </div>
         </div><!-- form-group //-->
     </section>

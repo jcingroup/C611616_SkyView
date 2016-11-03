@@ -20,5 +20,21 @@ namespace SkyView.Controllers
         {
             return Redirect("~/Manage");
         }
+
+        // 空拍-l1 桃園市地圖
+        public ActionResult OverlookArea()
+        {
+            return View();
+        }
+        // 空拍-l2 區域景點列表(google地圖)
+        public ActionResult OverlookList()
+        {
+            return View();
+        }
+        // 空拍-l3 景點介紹
+        public ActionResult Overlook()
+        {
+            return View();
+        }
     }
 }

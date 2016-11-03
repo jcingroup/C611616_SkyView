@@ -3,6 +3,8 @@
     Layout = "~/Views/Shared/_LayoutManage.cshtml";
     ViewBag.BodyClass = "Overlook";
     ViewBag.Crumb = "景點資料維護";
+    ViewBag.nav = "n1";
+    ViewBag.subNav = "sn1-1";
 }
 
 @section Breadcrumb {
@@ -11,6 +13,10 @@
 }
 
 <h3 class="h3">@ViewBag.Crumb</h3>
+
+<div class="alert alert-warning p-a-1">
+    點閱人數前三名的熱門景點，將會顯示在首頁輪播Banner。
+</div>
 
 <header class="table-header">
     <div class="table-filter">
@@ -25,10 +31,10 @@
 
 <table class="table table-sm table-bordered table-striped table-hover">
     <colgroup>
-        <col span="2" style="width: 7%">
-        <col style="width: 16%">
+        <col span="2" style="width: 6%">
+        <col style="width: 15%">
         <col>
-        <col style="width: 14%">
+        <col span="2" style="width: 14%">
     </colgroup>
     <thead>
         <tr>
@@ -40,6 +46,10 @@
             <th>
                 @* 如不需要排序功能: 純文字即可 *@
                 景點名稱
+            </th>
+            <th>
+                @* 點選排序功能 (點一下遞增 asc, 點兩下遞減 desc) *@
+                <button class="text-xs-center th-sort-toggle desc">點閱人數</button>
             </th>
             <th>
                 @* 點選排序功能 (點一下遞增 asc, 點兩下遞減 desc) *@
@@ -58,6 +68,7 @@
             </td>
             <td class="text-xs-center">大園區</td>
             <td>海湖靶場</td>
+            <td class="text-xs-center">500</td>
             <td class="text-xs-center"><span class="w3-tag label-success w3-round">顯示</span></td>
         </tr>
         <tr>
@@ -69,6 +80,7 @@
             </td>
             <td class="text-xs-center">中壢區</td>
             <td>老街溪口</td>
+            <td class="text-xs-center">1000</td>
             <td class="text-xs-center"><span class="w3-tag label-default w3-round">隱藏</span></td>
         </tr>
     </tbody>

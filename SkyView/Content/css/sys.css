@@ -5338,3 +5338,6 @@ a {
 .c-input-number {
   display: inline-block !important;
   width: 80px !important; }
+
+.margin-space-s {
+  margin-bottom: 0.5rem; }

@@ -1,11 +1,11 @@
 
-$('.scroll').click(function (event) {
+$('.scroll').click(function(event) {
     $('html, body').animate({
         scrollTop: $($.attr(this, 'href')).offset().top - 50
     }, 750);
     event.preventDefault();
 });
-$('.goTop').click(function() {
+$('.goTop').click(function(event) {
     $('body, html').stop(true).animate({scrollTop:0},750);
     event.preventDefault();
 });

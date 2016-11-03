@@ -8,6 +8,7 @@
     <meta name="description" content="">
     <title>@ViewBag.Title::桃園新視界 AWESOME TaoYuan-都市發展局</title>
     <link rel="stylesheet" href="~/Content/css/grid.css">
+    @RenderSection("css", required: false)
     @if (ViewBag.IsFirstPage)
     {
         <link rel="stylesheet" href="~/Content/css/index.css">
@@ -38,7 +39,7 @@
     </div><!-- wrapper //-->
 
     <footer id="footer">
-        <div class="wrap">
+        <div class="wrap row-x-0">
             <section class="col-9 foot-nav">
                 <h2 class="col-2">桃園市<small>區域導覽</small></h2>
                 <nav class="col-10">
@@ -68,6 +69,7 @@
         <div class="copyright">2016 &copy; Taoyuan City</div>
     </footer><!-- footer -->
 
+    <script src="//code.jquery.com/jquery-latest.min.js"></script>
     <script src="~/Content/js/common.js"></script>
     @RenderSection("scripts", required: false)
 </body>
