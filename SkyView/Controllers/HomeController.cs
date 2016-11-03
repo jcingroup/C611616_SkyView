@@ -27,12 +27,30 @@ namespace SkyView.Controllers
             return View();
         }
         // 空拍-l2 區域景點列表(google地圖)
-        public ActionResult OverlookList()
+        public ActionResult OverlookMap()
         {
             return View();
         }
         // 空拍-l3 景點介紹
         public ActionResult Overlook()
+        {
+            return View();
+        }
+
+        // 360環景
+        public ActionResult Overview()
+        {
+            return View();
+        }
+
+        // 關於本站
+        public ActionResult AboutUs()
+        {
+            return View();
+        }
+
+        // 網站導覽
+        public ActionResult Sitemap()
         {
             return View();
         }

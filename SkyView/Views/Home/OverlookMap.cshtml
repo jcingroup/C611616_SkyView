@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "俯瞰桃園之美";
+    ViewBag.BodyClass = "Overlook";
+    ViewBag.MapCurrent = "m1"; // 暫放
+}
+
+@section scripts {
+    @* google map - 上線前申請Key *@
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCA_hWYOYgohWqYa2frJkhOdE_C36qOmKQ"></script>
+    <script src="~/Content/js/map.js"></script>
+}
+
+@Html.Partial("SidebarOverlook")
+
+<div id="map-canvas" class="col-9 p-r-0"></div>

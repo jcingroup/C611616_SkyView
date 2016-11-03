@@ -293,7 +293,7 @@ small {
   font-weight: normal; }
 
 mark {
-  background-color: white;
+  background-color: #fff7d8;
   padding: .2em; }
 
 hr {
@@ -419,7 +419,6 @@ textarea {
   position: relative; }
 
 #wrapper {
-  background: url(../images/headerBg.gif) repeat-x 0 0;
   min-height: 100%;
   padding-bottom: 330px; }
 
@@ -531,7 +530,7 @@ textarea {
 .img-center {
   margin: auto; }
 
-.hidden {
+.hidden, #menu a.home {
   display: none; }
 
 .m-x-auto {
@@ -1105,46 +1104,46 @@ textarea {
   color: #98C524; }
 
 .text-info {
-  color: #063a83; }
+  color: #35b7b2; }
 
 .bg-info {
-  background: #07459B; }
+  background: #3EC7C2; }
 
 .hover-info:hover,
 .hover-info:active {
-  background: #0850b3; }
+  background: #52cdc8; }
 
 .hover-text-info:hover,
 .hover-text-info:active {
-  color: #07459B; }
+  color: #3EC7C2; }
 
 .text-warning {
-  color: #fee08d; }
+  color: #ffd125; }
 
 .bg-warning {
-  background: #FEE7A6; }
+  background: #FFD63F; }
 
 .hover-warning:hover,
 .hover-warning:active {
-  background: #feeebf; }
+  background: #ffdb59; }
 
 .hover-text-warning:hover,
 .hover-text-warning:active {
-  color: #FEE7A6; }
+  color: #FFD63F; }
 
 .text-danger {
-  color: #ec7b68; }
+  color: #e98f9b; }
 
 .bg-danger {
-  background: #EF8F7F; }
+  background: #EDA4AE; }
 
 .hover-danger:hover,
 .hover-danger:active {
-  background: #f2a396; }
+  background: #f1b9c1; }
 
 .hover-text-danger:hover,
 .hover-text-danger:active {
-  color: #EF8F7F; }
+  color: #EDA4AE; }
 
 @media (max-width: 61.1875em) {
   .mobile-hide {

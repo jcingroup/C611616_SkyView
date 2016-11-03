@@ -1,7 +1,10 @@
 ﻿
 @{
-    ViewBag.Title = "OverlookArea";
+    ViewBag.Title = "俯瞰桃園之美";
+    ViewBag.BodyClass = "Overlook";
+    ViewBag.MapCurrent = "all";
 }
 
-<h2>OverlookArea</h2>
+@Html.Partial("SidebarOverlook")
 
+<div id="content" class="col-9 p-r-0"></div>

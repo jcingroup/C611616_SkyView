@@ -101,12 +101,14 @@
     <Content Include="Content\font\fontAwesome\fontawesome-webfont.svg" />
     <Content Include="Content\font\icomoon\icomoon.svg" />
     <Content Include="Content\font\themify-icons\themify.svg" />
+    <Content Include="Content\images\icon-map.png" />
     <Content Include="Content\images\index\bannerBg.gif" />
     <Content Include="Content\images\index\bannerBg2.gif" />
     <Content Include="Content\images\index\icon-bird.gif" />
     <Content Include="Content\images\index\logo.gif" />
     <Content Include="Content\images\index\pic.jpg" />
     <Content Include="Content\images\index\pic2.jpg" />
+    <Content Include="Content\images\logo.gif" />
     <Content Include="Content\js\bootstrap\collapse.js" />
     <Content Include="Content\js\bootstrap\dropdown.js" />
     <Content Include="Content\js\bootstrap\util.js" />
@@ -114,6 +116,7 @@
     <Content Include="Content\js\jquery.lazyload.min.js" />
     <Content Include="Content\js\magnific-popup\jquery.magnific-popup.js" />
     <Content Include="Content\js\magnific-popup\jquery.magnific-popup.min.js" />
+    <Content Include="Content\js\map.js" />
     <Content Include="Content\js\swiper\swiper.min.js" />
     <Content Include="Content\js\tab.js" />
     <Content Include="Content\noIE\bg.gif" />
@@ -169,8 +172,12 @@
     <Content Include="Views\Manage\OverlookData.cshtml" />
     <Content Include="Views\Manage\ChangePW.cshtml" />
     <Content Include="Views\Home\OverlookArea.cshtml" />
-    <Content Include="Views\Home\OverlookList.cshtml" />
+    <Content Include="Views\Home\OverlookMap.cshtml" />
     <Content Include="Views\Home\Overlook.cshtml" />
+    <Content Include="Views\Home\Sitemap.cshtml" />
+    <Content Include="Views\Home\AboutUs.cshtml" />
+    <Content Include="Views\Home\Overview.cshtml" />
+    <Content Include="Views\Shared\SidebarOverlook.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

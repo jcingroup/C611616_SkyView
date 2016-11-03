@@ -26,9 +26,10 @@
             </h1>
             <nav id="menu" class="navbar">
                 <a href="~/Home/OverlookArea" class="@(ViewBag.BodyClass == "Overlook" ? "current" : "")">俯瞰桃園之美</a>
-                <a href="~/Home/OverviewList" class="@(ViewBag.BodyClass == "Overview" ? "current" : "")">360°環景</a>
+                <a href="~/Home/Overview" class="@(ViewBag.BodyClass == "Overview" ? "current" : "")">360°環景</a> @* 暫放-等有資料再顯示 *@
                 <a href="~/Home/AboutUs" class="@(ViewBag.BodyClass == "AboutUs" ? "current" : "")">關於本站</a>
                 <a href="~/Home/Sitemap" class="@(ViewBag.BodyClass == "Sitemap" ? "current" : "")">網站導覽</a>
+                <a href="~/Home" class="home">回首頁</a>
             </nav>
         </header>
 
@@ -46,6 +47,7 @@
                     <a href="~/Home/OverlookMap">復興區</a>
                     <a href="~/Home/OverlookMap">龍潭區</a>
                     <a href="~/Home/OverlookMap">蘆竹區</a>
+                    <a href="~/Home/OverlookMap">八德區</a>
                     <a href="~/Home/OverlookMap">桃園區</a>
                     <a href="~/Home/OverlookMap">觀音區</a>
                     <a href="~/Home/OverlookMap">大園區</a>
