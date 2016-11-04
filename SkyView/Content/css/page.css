@@ -1374,10 +1374,10 @@ figure {
     margin-bottom: 0.9rem; }
     #sidebar a:hover, #sidebar a:active, #sidebar a.current {
       background: #A3C93F;
-      border-color: #F2F2F2;
+      border-color: #d3e5a3;
       color: #2A2B2E; }
 
-#map-canvas {
+#map {
   height: 720px; }
 
 .kind-list {

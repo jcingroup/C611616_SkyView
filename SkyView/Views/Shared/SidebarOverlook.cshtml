@@ -3,10 +3,10 @@
     <a href="~/Home/OverlookArea" class="@(ViewBag.MapCurrent == "all" ? "current" : "")">桃園全區</a>
     @* 當前選單加 class="current"
     <a href="~/Home/OverlookMap" class="current">復興區</a> *@
-    <a href="~/Home/OverlookMap" class="@(ViewBag.MapCurrent == "m1" ? "current" : "")">復興區</a> @* 暫放 *@
+    <a href="~/Home/OverlookMap">復興區</a> @* 暫放 *@
     <a href="~/Home/OverlookMap">龍潭區</a>
     <a href="~/Home/OverlookMap">蘆竹區</a>
-    <a href="~/Home/OverlookMap">桃園區</a>
+    <a href="~/Home/OverlookMap" class="@(ViewBag.MapCurrent == "m1" ? "current" : "")">桃園區</a>
     <a href="~/Home/OverlookMap">八德區</a>
     <a href="~/Home/OverlookMap">觀音區</a>
     <a href="~/Home/OverlookMap">大園區</a>
