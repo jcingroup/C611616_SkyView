@@ -14,6 +14,10 @@
 
 <h3 class="h3">@ViewBag.Crumb<small class="sub"><i class="fa-angle-double-right"></i> 編輯</small></h3>
 
+<div class="alert alert-warning text-sm p-a-small">
+    景點小圖修改檔下載(PSD)，教學文件下載
+</div>
+
 <form action="" class="form form-sm">
     <section class="col-xs-6 m-b-1">
         <div class="form-group row">
@@ -42,12 +46,12 @@
             </label>
             <div class="col-xs-10">
                 <div class="input-group margin-space-s">
-                    <span class="input-group-addon">緯度</span>
-                    <input type="text" class="form-control form-control-sm" required>
+                    <span class="input-group-addon">經度</span>
+                    <input type="text" class="form-control form-control-sm" placeholder="lat" required>
                 </div>
                 <div class="input-group">
-                    <span class="input-group-addon">經度</span>
-                    <input type="text" class="form-control form-control-sm" required>
+                    <span class="input-group-addon">緯度</span>
+                    <input type="text" class="form-control form-control-sm" placeholder="lng" required>
                 </div>
             </div>
         </div>
@@ -78,14 +82,14 @@
             <div class="col-xs-10">
                 @* 瀏覽&上傳檔案 *@
                 <input type="file" class="form-control" name="pic" accept="image/*">
-                @* 照片縮圖 *@
+                @* 照片縮圖(上傳圖片後顯示) *@
                 <ol class="upload-img list-inline">
                     <li>
                         <button class="close">&times;</button> @* 刪除圖片的按鈕 *@
                         <img src="" alt="">
                     </li>
                 </ol>
-                <small class="text-muted">可上傳 1 張照片，建議尺寸 80 * 54 px，每張圖最大不可超過 1MB</small>
+                <small class="text-muted">可上傳 1 張照片，建議尺寸 80*94px，每張圖最大不可超過 200kb (請使用上方的psd原始檔修改)</small>
             </div>
         </div><!-- form-group //-->
         <div class="form-group row">
@@ -95,14 +99,14 @@
             <div class="col-xs-10">
                 @* 瀏覽&上傳檔案 *@
                 <input type="file" class="form-control" name="pic" accept="image/*">
-                @* 照片縮圖 *@
+                @* 照片縮圖(上傳圖片後顯示)
                 <ol class="upload-img list-inline">
                     <li>
-                        <button class="close">&times;</button> @* 刪除圖片的按鈕 *@
+                        <button class="close">&times;</button>
                         <img src="" alt="">
                     </li>
-                </ol>
-                <small class="text-muted">可上傳多張照片，建議尺寸 1050 * 700 px，每張圖最大不可超過 500kb</small>
+                </ol> *@
+                <small class="text-muted">可上傳多張照片，建議尺寸寬度不超過 1064px，每張圖最大不可超過 500kb</small>
             </div>
         </div><!-- form-group //-->
     </section>

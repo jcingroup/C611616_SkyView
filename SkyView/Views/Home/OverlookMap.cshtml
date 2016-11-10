@@ -10,7 +10,8 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCA_hWYOYgohWqYa2frJkhOdE_C36qOmKQ"></script>
     <script>
         function initialize() {
-            // 用此寫法也可 areaLatLng = {lat: 24.9932092, lng: 121.3009661};
+            // *** 套程式 ***
+            // 經度-緯度 (該地區的中心點)
             var areaLatLng = new google.maps.LatLng(24.9934100,121.2969670);
 
             var mapOptions = {
@@ -30,7 +31,7 @@
             setMarkers(map);
         }
 
-        // 套程式
+        // *** 套程式 ***
         // [後台] 景點名稱(名稱不超過6個字)-經度-緯度-圖層
         var locations = [
             ['桃園火車站', 24.989207, 121.313544, 2],
