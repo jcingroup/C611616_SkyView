@@ -30,7 +30,8 @@
             setMarkers(map);
         }
 
-        // 名稱不超過6個字
+        // 套程式
+        // [後台] 景點名稱(名稱不超過6個字)-經度-緯度-圖層
         var locations = [
             ['桃園火車站', 24.989207, 121.313544, 2],
             ['桃園展演中心', 25.0174730, 121.2986010, 1]
@@ -39,11 +40,15 @@
         function setMarkers(map) {
             // Adds markers to the map.
             var image = {
+                // [後台] 景點小圖-需寫進下方的廻圖(每張景點的圖片名稱不一致)
                 url: '/Content/images/map-img.png',
+
                 // This marker is 20 pixels wide by 32 pixels high.
                 size: new google.maps.Size(80, 94),
+
                 // The origin for this image is (0, 0).
                 origin: new google.maps.Point(0, 0),
+
                 // The anchor for this image is the base of the flagpole at (0, 32).
                 anchor: new google.maps.Point(31, 94),
                 labelOrigin: new google.maps.Point(41, 64)
@@ -64,6 +69,7 @@
                     zIndex: local[3]
                 });
                 marker.addListener('click', function() {
+                    // 連結景點介紹內頁
                     location.href = '/Home/Overlook';
                 });
             }
