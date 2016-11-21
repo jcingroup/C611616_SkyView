@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="~/Content/css/vendor/w3.css">
     <link rel="stylesheet" href="~/Content/css/vendor/fontAwesome/font-awesome.css">
     <link rel="stylesheet" href="~/Content/css/sys.css">
+
+    @* 引用 jQuery *@
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
     @RenderSection("IncludeCSS", false)
 </head>
 <body class="@ViewBag.BodyClass">
@@ -88,8 +92,6 @@
         </p>
     </footer><!-- footer //-->
 
-    @* 引用 jQuery *@
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 
     @* 引用 Bootstrap (左選單開合效果) *@
     <script src="~/Content/js/bootstrap/util.js"></script>

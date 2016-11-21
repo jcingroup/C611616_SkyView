@@ -10,6 +10,12 @@
     <script src='https://www.google.com/recaptcha/api.js'></script>
 }
 
+<script type="text/javascript">
+    function form_ok() {
+        form1.submit();
+    }
+
+</script>
 <h1 class="logo">
     <span class="name text-danger">都發局-桃園新視界 管理系統</span>Web Manager
 </h1>
@@ -17,7 +23,7 @@
 
 <div class="login-box">
 
-    <form class="form form-sm">
+    <form class="form form-sm" name="form1" id="form1" action="Manage/Login_Chk" method="post">
 
         <div class="form-group">
             <h3 class="h3">System Login</h3>
@@ -25,12 +31,12 @@
 
         <div class="form-group">
             <label>帳號 Username</label>
-            <input type="text" class="form-control" placeholder="帳號">
+            <input type="text" class="form-control" placeholder="帳號" name="account" id="account">
         </div>
 
         <div class="form-group">
             <label>密碼 Password</label>
-            <input type="password" class="form-control">
+            <input type="password" class="form-control" name="pwd" id="pwd">
         </div>
 
         <div class="form-group">
@@ -42,7 +48,7 @@
         </div>
 
         <div class="form-group form-action text-xs-center">
-            <button type="button" class="btn btn-sm btn-info" onclick="location.href='Manage/OverlookList'">登入 LOGIN</button>
+            <button type="button" class="btn btn-sm btn-info" onclick="form_ok();">登入 LOGIN</button>
         </div>
 
     </form>

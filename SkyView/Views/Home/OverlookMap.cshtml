@@ -11,8 +11,9 @@
     <script>
         function initialize() {
             // *** 套程式 ***
-            // 經度-緯度 (該地區的中心點)
-            var areaLatLng = new google.maps.LatLng(24.9934100,121.2969670);
+            // 經度-緯度 (該地區的中心點) ->更正  緯度-經度 (該地區的中心點)
+            //var areaLatLng = new google.maps.LatLng(24.9934100,121.2969670);
+            var areaLatLng = new google.maps.LatLng(24.850281, 121.211731);
 
             var mapOptions = {
                 // 地圖放大比例-數字愈大愈詳細
