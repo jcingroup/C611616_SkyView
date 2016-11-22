@@ -19,29 +19,8 @@
 [class*="icon"]:not(:empty)::before {
   margin-right: .2em; }
 
-.icon-trash-can::before {
-  content: "\e910"; }
-
-.icon-trash-can2::before {
-  content: "\e915"; }
-
-.icon-pen-angled::before {
-  content: "\e916"; }
-
-.icon-pen-angled2::before {
-  content: "\e917"; }
-
-.icon-file-doc::before {
-  content: "\e918"; }
-
-.icon-file-doc2::before {
-  content: "\e919"; }
-
-.icon-file-xls::before {
-  content: "\e91a"; }
-
-.icon-file-xls2::before {
-  content: "\e91b"; }
+.icon-menu2::before {
+  content: "\e120"; }
 
 .icon-arrow_drop_down_circle::before {
   content: "\e5c6"; }
@@ -49,23 +28,8 @@
 .icon-arrow_upward::before {
   content: "\e5d8"; }
 
-.icon-check2::before {
-  content: "\e5ca"; }
-
-.icon-shopping_cart::before {
-  content: "\e8cc"; }
-
-.icon-local_mall::before {
-  content: "\e54c"; }
-
-.icon-local_shipping::before {
-  content: "\e558"; }
-
 .icon-room::before {
   content: "\e8b4"; }
-
-.icon-mode_edit::before {
-  content: "\e254"; }
 
 .icon-lock_open::before {
   content: "\e898"; }
@@ -118,12 +82,6 @@
 .icon-zoom_out_map::before {
   content: "\e56b"; }
 
-.icon-navigate_before::before {
-  content: "\e408"; }
-
-.icon-navigate_next::before {
-  content: "\e409"; }
-
 .icon-close::before {
   content: "\e5cd"; }
 
@@ -135,12 +93,6 @@
 
 .icon-error_outline::before {
   content: "\e001"; }
-
-.icon-expand_less::before {
-  content: "\e5ce"; }
-
-.icon-expand_more::before {
-  content: "\e5cf"; }
 
 .icon-lock2::before {
   content: "\e897"; }
@@ -162,6 +114,30 @@
 
 .icon-person::before {
   content: "\e7fd"; }
+
+.icon-trash-can::before {
+  content: "\e910"; }
+
+.icon-trash-can2::before {
+  content: "\e915"; }
+
+.icon-pen-angled::before {
+  content: "\e916"; }
+
+.icon-pen-angled2::before {
+  content: "\e917"; }
+
+.icon-file-doc::before {
+  content: "\e918"; }
+
+.icon-file-doc2::before {
+  content: "\e919"; }
+
+.icon-file-xls::before {
+  content: "\e91a"; }
+
+.icon-file-xls2::before {
+  content: "\e91b"; }
 
 .icon-chevron-small-down::before {
   content: "\e908"; }
@@ -198,9 +174,6 @@
 
 .icon-home::before {
   content: "\e900"; }
-
-.icon-lock::before {
-  content: "\e901"; }
 
 .icon-magnifying-glass::before {
   content: "\e902"; }

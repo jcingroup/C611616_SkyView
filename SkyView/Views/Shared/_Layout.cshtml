@@ -8,6 +8,7 @@
     <meta name="description" content="">
     <title>@ViewBag.Title::桃園新視界 AWESOME TaoYuan-都市發展局</title>
     <link rel="stylesheet" href="~/Content/css/grid.css">
+    <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
     @RenderSection("css", required: false)
     @if (ViewBag.IsFirstPage)
     {
@@ -24,7 +25,9 @@
             <h1 class="logo" onclick="location.href='@Url.Content("~/Home")'" title="回首頁" tabindex="-1">
                 桃園新視界 AWESOME TaoYuan-都市發展局
             </h1>
+            <button class="mobile-trigger lnr lnr-menu" title="主選單"></button>
             <nav id="menu" class="navbar">
+                <button class="mobile-close lnr lnr-cross" title="關閉主選單"></button>
                 <a href="~/Home/OverlookArea">俯瞰桃園之美</a>
                 @* <a href="~/Home/Overview"">360°環景</a> 目前沒有-等有資料再顯示 *@
                 <a href="~/Home/AboutUs">關於本站</a>
@@ -41,9 +44,9 @@
 
     <footer id="footer">
         <div class="wrap row-x-0">
-            <section class="col-9 foot-nav">
-                <h2 class="col-2">桃園市<small>區域導覽</small></h2>
-                <nav class="col-10">
+            <section class="col-md-9 foot-nav">
+                <h2 class="col-sm-2">桃園市<small>區域導覽</small></h2>
+                <nav class="col-sm-10">
                     <a href="~/Home/OverlookMap?area_id=7">復興區</a>
                     <a href="~/Home/OverlookMap?area_id=2">龍潭區</a>
                     <a href="~/Home/OverlookMap?area_id=8">蘆竹區</a>
@@ -60,7 +63,7 @@
                 </nav>
             </section>
 
-            <address class="col-3 foot-contact">
+            <address class="col-md-3 foot-contact">
                 <p>桃園市政府都市發展局</p>
                 <p>33001 桃園市桃園區縣府路1號2樓</p>
                 <p><em>TEL:</em>03-3322101#5780</p>
