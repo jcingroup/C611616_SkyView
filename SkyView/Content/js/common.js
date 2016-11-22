@@ -10,40 +10,30 @@ $('.goTop').click(function(event) {
     event.preventDefault();
 });
 
-// 下拉選單
-// var $dropbtn = $("[data-dropdown='toggle']");
-// var dropcontent = "[data-dropdown='content']";
-// $dropbtn.click(function(){
-//     event.preventDefault();
-//     $(this).next(dropcontent).slideToggle("300");
-// });
-// $dropbtn.blur(function(){
-//     $(this).next(dropcontent).slideUp("300");
-// });
 
 // 縮放特效
-var $collapse = $("[data-toggle='collapse']");
-var fall = '.collapse-content';
+// var $collapse = $("[data-toggle='collapse']");
+// var fall = '.collapse-content';
 
-$collapse.click(function () {
-    $(this).next(fall).slideToggle();
-    $(this).parent().siblings().children().next().slideUp(100);
-    // $(this).siblings().next(fall).slideUp();
-    $(this).toggleClass("current"),
-            $collapse.not(this).removeClass("current");
-    return false;
-});
+// $collapse.click(function () {
+//     $(this).next(fall).slideToggle();
+//     $(this).parent().siblings().children().next().slideUp(100);
+//     // $(this).siblings().next(fall).slideUp();
+//     $(this).toggleClass("current"),
+//             $collapse.not(this).removeClass("current");
+//     return false;
+// });
 
 // 行動裝置的主選單
-$menuLeft = $('#menu');
 $trigger = $('.mobile-trigger');
+$menuClose = $('.mobile-close');
 
 $trigger.click(function() {
     $(this).toggleClass('active');
-    $('body').toggleClass('push');
+    $('body').toggleClass('overlay');
 });
-$('.toggle').click(function() {
-    $('body').removeClass('push');
+$menuClose.click(function() {
+    $('body').removeClass('overlay');
 });
 
 // 行動裝置的產品分類選單

@@ -8,15 +8,12 @@ html {
 body {
   margin: 0; }
 
-article, aside, footer, header, nav, section {
+article, aside, footer, header, nav, section, figcaption, figure, main {
   display: block; }
 
 h1 {
   font-size: 2em;
   margin: 0.67em 0; }
-
-figcaption, figure, main {
-  display: block; }
 
 figure {
   margin: 1em 40px; }
@@ -347,36 +344,21 @@ summary,
 textarea {
   touch-action: manipulation; }
 
-.foot-nav small, .block, .img-center {
-  display: block; }
-
-.foot-nav a, #menu a, .goTop i, .label, figure, .inline-block, #sidebar a, .sitemaplist nav:first-child a {
-  display: inline-block; }
-
-.btn-link, .inline {
-  display: inline; }
-
 .logo, .float-l, #sidebar a {
   float: left; }
 
 #menu, .float-r {
   float: right; }
 
-.wrap::after, #header::after, #main::after, #footer::after, .news-list figcaption::after, .clearfix::after, #sidebar::after {
+.wrap::after, #header::after, #main::after, #footer::after, .clearfix::after, #sidebar::after {
   display: table;
   clear: both; }
-  .wrap::after, #header::after, #main::after, #footer::after, .news-list figcaption::after, .clearfix::after, #sidebar::after, #wrapper::before, .hover-underline::before, .overlook-content::before {
+  .wrap::after, #header::after, #main::after, #footer::after, .clearfix::after, #sidebar::after, #wrapper::before, .hover-underline::before, .overlook-content::before {
     content: ''; }
-
-.goTop i, .circle {
-  border-radius: 50%; }
 
 .full {
   width: 100%;
   max-width: 100%; }
-
-.half {
-  width: 49.5%; }
 
 .logo, .text-hide, .arealist a {
   font: 0/0 a;
@@ -458,9 +440,11 @@ textarea {
   font-size: 1.6875em;
   letter-spacing: 2px; }
 .foot-nav small {
+  display: block;
   font-size: 0.74074em;
   letter-spacing: 1px; }
 .foot-nav a {
+  display: inline-block;
   width: 19%;
   letter-spacing: 1px; }
 
@@ -485,16 +469,17 @@ textarea {
     font-size: 1.125em;
     height: 100%;
     line-height: 76px;
-    letter-spacing: 3px; }
-    .Overlook #menu a:nth-child(1), .AboutUs #menu a:nth-child(2), .Sitemap #menu a:nth-child(3) {
+    letter-spacing: 3px;
+    display: inline-block; }
+    .Overlook #menu a:nth-of-type(1), .AboutUs #menu a:nth-of-type(2), .Sitemap #menu a:nth-of-type(3) {
       border-radius: 0 0 5px 5px;
       color: #1F3D2D;
       text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.6); }
-    .Overlook #menu a:nth-child(1) {
+    .Overlook #menu a:nth-of-type(1) {
       background: #A3C93F; }
-    .AboutUs #menu a:nth-child(2) {
+    .AboutUs #menu a:nth-of-type(2) {
       background: #EDA4AE; }
-    .Sitemap #menu a:nth-child(3) {
+    .Sitemap #menu a:nth-of-type(3) {
       background: #3EC7C2; }
 
 @media (max-width: 61.1875em) {
@@ -529,7 +514,16 @@ textarea {
   overflow: hidden; }
   @media (max-width: 61.1875em) {
     .mobile-trigger {
-      display: block; } }
+      display: block;
+      color: #fff;
+      background: none;
+      border: none;
+      font-size: 2.5em;
+      font-weight: normal;
+      float: right; } }
+
+.mobile-close {
+  display: none; }
 
 .goTop {
   z-index: 99;
@@ -550,6 +544,8 @@ textarea {
   .goTop i {
     width: 31px;
     height: 31px;
+    border-radius: 50%;
+    display: inline-block;
     vertical-align: middle;
     border: 1px solid #A3C93F;
     color: #A3C93F;
@@ -583,6 +579,7 @@ button {
     background-color: #9E9E9E; }
 
 .btn-link {
+  display: inline;
   color: #fff;
   line-height: 1.5;
   background: none;
@@ -617,6 +614,7 @@ button {
     background: #247b78 url(../images/icon-prev.png) no-repeat 22px center; }
 
 .label {
+  display: inline-block;
   padding: 2px 5px;
   margin: 0 5px;
   border-radius: 3px;
@@ -665,10 +663,9 @@ figure {
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  vertical-align: top; }
+  margin: 0; }
   figure > a {
     z-index: 1;
-    white-space: nowrap;
     opacity: 0; }
   @media (max-width: 61.1875em) {
     figure {
@@ -683,36 +680,6 @@ figure {
   @media (max-width: 30em) {
     figure {
       width: 100%; } }
-
-.news-list {
-  max-width: 350px; }
-  .news-list figcaption {
-    position: relative;
-    height: 220px;
-    background: #FFF9A7; }
-  .news-list img {
-    min-width: 100%;
-    max-height: 270px;
-    min-height: 270px;
-    -webkit-transition: transform 0.5s, filter 1s;
-    transition: transform 0.5s, filter 1s; }
-  .news-list .btn {
-    position: absolute;
-    right: 12px;
-    bottom: 12px;
-    background: #fef272;
-    color: #595959;
-    text-shadow: none;
-    z-index: 2; }
-    .news-list .btn:hover, .news-list .btn:active {
-      background: #298f8b;
-      color: #fff; }
-  .news-list:hover img, .news-list:active img {
-    -ms-transform: scale(1.1);
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
-    -webkit-filter: brightness(1.2);
-    filter: brightness(1.2); }
 
 .hover-underline {
   position: relative; }
@@ -734,14 +701,27 @@ figure {
     -webkit-transform: scaleX(1);
     transform: scaleX(1); }
 
+.block {
+  display: block; }
+
+.inline-block {
+  display: inline-block; }
+
+.inline {
+  display: inline; }
+
 .clear, #main {
   clear: both; }
 
-.img-center {
-  margin: auto; }
-
 .hidden {
   display: none; }
+
+.circle {
+  border-radius: 50%; }
+
+.img-center {
+  display: block;
+  margin: auto; }
 
 .m-x-auto {
   margin-right: auto;
@@ -796,7 +776,7 @@ figure {
 .m-a-4 {
   margin: 4px; }
 
-.m-t-4, .news-list figcaption {
+.m-t-4 {
   margin-top: 4px; }
 
 .m-r-4 {
@@ -825,7 +805,7 @@ figure {
 .m-r-8, .foot-contact em, .goTop i, #sidebar a:nth-child(odd) {
   margin-right: 8px; }
 
-.m-b-8, .news-list h3 {
+.m-b-8 {
   margin-bottom: 8px; }
 
 .m-l-8 {
@@ -877,7 +857,7 @@ figure {
 .m-l-16 {
   margin-left: 16px; }
 
-.m-x-16, .news-list {
+.m-x-16 {
   margin-right: 16px;
   margin-left: 16px; }
 
@@ -888,13 +868,13 @@ figure {
 .m-a-24 {
   margin: 24px; }
 
-.m-t-24, .news-list .btn, .overlook-content footer {
+.m-t-24, .overlook-content footer {
   margin-top: 24px; }
 
 .m-r-24 {
   margin-right: 24px; }
 
-.m-b-24, .news-list {
+.m-b-24 {
   margin-bottom: 24px; }
 
 .m-l-24 {
@@ -1069,7 +1049,7 @@ figure {
   padding-top: 8px;
   padding-bottom: 8px; }
 
-.p-a-12, .news-list figcaption {
+.p-a-12 {
   padding: 12px; }
 
 .p-t-12 {
@@ -1141,7 +1121,7 @@ figure {
 .p-a-32 {
   padding: 32px; }
 
-.p-t-32, #footer {
+.p-t-32 {
   padding-top: 32px; }
 
 .p-r-32, .btn-back {
@@ -1157,7 +1137,7 @@ figure {
   padding-right: 32px;
   padding-left: 32px; }
 
-.p-y-32 {
+.p-y-32, #footer {
   padding-top: 32px;
   padding-bottom: 32px; }
 
@@ -1211,7 +1191,7 @@ figure {
   border-bottom: 1px solid #79d8d5;
   padding-bottom: 0.66667rem; }
 
-.text-left, .foot-nav, .foot-contact, .news-list figcaption, .overlook-content article, .sitemaplist {
+.text-left, .foot-nav, .foot-contact, .overlook-content article, .sitemaplist {
   text-align: left; }
 
 .text-right {
@@ -1232,7 +1212,7 @@ figure {
 .font-md {
   font-size: 0.9375rem; }
 
-.font-lg, .news-list p {
+.font-lg {
   font-size: 1.25rem; }
 
 .font-xl {
@@ -1371,6 +1351,7 @@ figure {
 #sidebar {
   padding-top: 50px; }
   #sidebar a {
+    display: inline-block;
     width: 45%;
     padding: 5px 0;
     background: #000;
@@ -1531,4 +1512,5 @@ figure {
 .sitemaplist a {
   letter-spacing: 2px; }
 .sitemaplist nav:first-child a {
+  display: inline-block;
   width: 23%; }
