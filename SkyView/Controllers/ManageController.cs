@@ -84,6 +84,7 @@ namespace SkyView.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Save(string action_sty, string area_id, string scenic_id, string scenic_name, string longitude, string latitude, string scenic_desc,string show,string img_no)
         {
             //OverlookDBService OverlookDB = new OverlookDBService();
@@ -249,6 +250,34 @@ namespace SkyView.Controllers
             return Content(str_return);
         }
 
+        /// <summary>
+        /// ckeditor上傳圖片
+        /// </summary>
+        /// <param name="upload">預設參數叫upload</param>
+        /// <param name="CKEditorFuncNum"></param>
+        /// <param name="CKEditor"></param>
+        /// <param name="langCode"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult UploadPicture(HttpPostedFileBase upload, string CKEditorFuncNum, string CKEditor, string langCode)
+        {
+            string result = "";
+            if (upload != null && upload.ContentLength > 0)
+            {
+                //儲存圖片至Server
+                upload.SaveAs(Server.MapPath("~/Images/" + upload.FileName));
+
+
+                var imageUrl = Url.Content("~/Images/" + upload.FileName);
+
+                var vMessage = string.Empty;
+
+                result = @"<html><body><script>window.parent.CKEDITOR.tools.callFunction(" + CKEditorFuncNum + ", \"" + imageUrl + "\", \"" + vMessage + "\");</script></body></html>";
+
+            }
+
+            return Content(result);
+        }
     }
 
 }
