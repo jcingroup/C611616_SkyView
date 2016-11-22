@@ -56,8 +56,16 @@ namespace SkyView.Controllers
         }
 
         // 空拍-l3 景點介紹
-        public ActionResult Overlook()
+        public ActionResult Overlook(string scenic_id)
         {
+            DataTable d_lookList;
+            DataTable d_lookList_Img;
+
+            d_lookList = OverlookDB.List(scenic_id,"","");
+            d_lookList_Img = OverlookDB.Img_List(scenic_id, "B");
+
+            ViewBag.d_lookList = d_lookList;
+            ViewBag.d_lookList_Img = d_lookList_Img;
             return View();
         }
 

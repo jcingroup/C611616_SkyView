@@ -4,6 +4,7 @@
     ViewBag.BodyClass = "Overlook OverlookMap";
     DataTable d_area = (DataTable)ViewBag.d_area;
     DataTable d_lookList = (DataTable)ViewBag.d_lookList;
+    string scenic_id = "";
     string scenic_name = "";
     string longitude = "";
     string latitude = "";
@@ -52,12 +53,13 @@
         }
 
         // *** 套程式 ***
-        // [後台] 景點名稱(名稱不超過6個字)-經度-緯度-圖層-圖檔
+        // [後台] [景點名稱(名稱不超過6個字),經度,緯度,圖層,圖檔,景點編號]
         var locations = [
             //['桃園火車站', 24.989207, 121.313544, 2]
             //,['桃園展演中心', 25.0174730, 121.2986010, 1]
             @for (i = 0; i < d_lookList.Rows.Count; i++)
             {
+                scenic_id = d_lookList.Rows[i]["_SEQ_ID"].ToString();
                 scenic_name = d_lookList.Rows[i]["scenic_name"].ToString();
                 longitude = d_lookList.Rows[i]["longitude"].ToString();
                 latitude = d_lookList.Rows[i]["latitude"].ToString();
@@ -69,13 +71,13 @@
                 {
                     img_file = "~/Content/images/map-img.png";
                 }
-                
+
                 if (i > 0)
                 {
                     @:,
                 }
 
-                @:['@scenic_name',@latitude,@longitude,@(d_lookList.Rows.Count - 1 - i),image_setting('@Url.Content(img_file)')]
+                @:['@scenic_name',@latitude,@longitude,@(d_lookList.Rows.Count - 1 - i),image_setting('@Url.Content(img_file)'),@scenic_id]
              }
         ];
 
@@ -120,6 +122,8 @@
             *@
 
             // The final coordinate closes the poly by connecting to the first coordinate.
+
+
             for (var i = 0; i < locations.length; i++) {
                 var local = locations[i];
                 var marker = new google.maps.Marker({
@@ -134,10 +138,22 @@
                     zIndex: local[3]
                 });
 
+                @*google.maps.event.addListener(marker, 'click', function () {
+                    // 連結景點介紹內頁
+                    location.href = '@Url.Content("~/Home/Overlook")?scenic_id=' + local[5];
+                    //location.href = '/Show/ViewW?scnid=' + marker.name;
+                    //location.href = '/Show/ViewW?scnid=' + this.name;
+                    ///jQueryPost/PostingData
+                    //map.setZoom(8);
+                    //map.setCenter(marker.getPosition());
+                });*@
+
+                
                 marker.addListener('click', function() {
                     // 連結景點介紹內頁
-                    location.href = '@Url.Content("~/Home/Overlook")';
+                    location.href = '@Url.Content("~/Home/Overlook")?scenic_id=' + local[5];
                 });
+                
             }
         }
 
