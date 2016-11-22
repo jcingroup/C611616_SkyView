@@ -4,11 +4,21 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebUser.Controller;
+using SkyView.Service;
+using System.Data;
+using System.Data.SqlClient;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Collections.Specialized;
+/*Json.NET相關的命名空間*/
+using Newtonsoft.Json;
 
 namespace SkyView.Controllers
 {
     public class HomeController : WebUserController
     {
+        OverlookDBService OverlookDB = new OverlookDBService();
         // GET: Home
         public ActionResult Index()
         {
@@ -26,11 +36,25 @@ namespace SkyView.Controllers
         {
             return View();
         }
+
         // 空拍-l2 區域景點列表(google地圖)
-        public ActionResult OverlookMap()
+        public ActionResult OverlookMap(string area_id = "")
         {
+            DataTable d_area;
+            DataTable d_lookList;
+            //抓取中心資料
+            d_area = OverlookDB.AreaList(area_id);
+            //抓取景觀資料
+            d_lookList = OverlookDB.List("", "", area_id);
+            //抓取小圖
+
+            ViewBag.d_area = d_area;
+            ViewBag.d_lookList = d_lookList;
+            ViewBag.MapCurrent = area_id;
+
             return View();
         }
+
         // 空拍-l3 景點介紹
         public ActionResult Overlook()
         {

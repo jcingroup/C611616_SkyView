@@ -1,8 +1,27 @@
-﻿
+﻿@using System.Data;
 @{
     ViewBag.Title = "俯瞰桃園之美";
     ViewBag.BodyClass = "Overlook OverlookMap";
-    ViewBag.MapCurrent = "m1"; // 暫放
+    DataTable d_area = (DataTable)ViewBag.d_area;
+    DataTable d_lookList = (DataTable)ViewBag.d_lookList;
+    string scenic_name = "";
+    string longitude = "";
+    string latitude = "";
+    string img_file = "";
+    int i = 0;
+    if (d_area.Rows.Count > 0)
+    {
+        ViewBag.center_longitude = d_area.Rows[0]["longitude"].ToString(); //地區中心經度
+        ViewBag.center_latitude = d_area.Rows[0]["latitude"].ToString();   //地區中心緯度
+    }
+    else
+    {
+        ViewBag.center_longitude = "";
+        ViewBag.center_latitude = "";
+    }
+
+
+
 }
 
 @section scripts {
@@ -13,7 +32,7 @@
             // *** 套程式 ***
             // 經度-緯度 (該地區的中心點) ->更正  緯度-經度 (該地區的中心點)
             //var areaLatLng = new google.maps.LatLng(24.9934100,121.2969670);
-            var areaLatLng = new google.maps.LatLng(24.850281, 121.211731);
+            var areaLatLng = new google.maps.LatLng(@ViewBag.center_latitude, @ViewBag.center_longitude);
 
             var mapOptions = {
                 // 地圖放大比例-數字愈大愈詳細
@@ -33,13 +52,56 @@
         }
 
         // *** 套程式 ***
-        // [後台] 景點名稱(名稱不超過6個字)-經度-緯度-圖層
+        // [後台] 景點名稱(名稱不超過6個字)-經度-緯度-圖層-圖檔
         var locations = [
-            ['桃園火車站', 24.989207, 121.313544, 2],
-            ['桃園展演中心', 25.0174730, 121.2986010, 1]
+            //['桃園火車站', 24.989207, 121.313544, 2]
+            //,['桃園展演中心', 25.0174730, 121.2986010, 1]
+            @for (i = 0; i < d_lookList.Rows.Count; i++)
+            {
+                scenic_name = d_lookList.Rows[i]["scenic_name"].ToString();
+                longitude = d_lookList.Rows[i]["longitude"].ToString();
+                latitude = d_lookList.Rows[i]["latitude"].ToString();
+                if(d_lookList.Rows[i]["img_file"].ToString().Trim().Length > 0)
+                {
+                    img_file = "~/Images/" + d_lookList.Rows[i]["img_file"].ToString();
+                }
+                else
+                {
+                    img_file = "~/Content/images/map-img.png";
+                }
+                
+                if (i > 0)
+                {
+                    @:,
+                }
+
+                @:['@scenic_name',@latitude,@longitude,@(d_lookList.Rows.Count - 1 - i),image_setting('@Url.Content(img_file)')]
+             }
         ];
 
+        function image_setting(c_url){
+            // Adds markers to the map.
+            var image = {
+                // [後台] 景點小圖-需寫進下方的廻圖(每張景點的圖片名稱不一致)
+                //url: '/Content/images/map-img.png',
+                url: c_url,
+                // This marker is 20 pixels wide by 32 pixels high.
+                size: new google.maps.Size(80, 94),
+
+                // The origin for this image is (0, 0).
+                origin: new google.maps.Point(0, 0),
+
+                // The anchor for this image is the base of the flagpole at (0, 32).
+                anchor: new google.maps.Point(31, 94),
+                labelOrigin: new google.maps.Point(41, 64)
+            };
+
+            return image;
+        }
+
         function setMarkers(map) {
+            @* 移至 function image_setting內 *@
+            @*
             // Adds markers to the map.
             var image = {
                 // [後台] 景點小圖-需寫進下方的廻圖(每張景點的圖片名稱不一致)
@@ -55,6 +117,7 @@
                 anchor: new google.maps.Point(31, 94),
                 labelOrigin: new google.maps.Point(41, 64)
             };
+            *@
 
             // The final coordinate closes the poly by connecting to the first coordinate.
             for (var i = 0; i < locations.length; i++) {
@@ -62,7 +125,7 @@
                 var marker = new google.maps.Marker({
                     position: {lat: local[1], lng: local[2]},
                     map: map,
-                    icon: image,
+                    icon: local[4],
                     label: {
                         text: local[0],
                         color: '#fff',
@@ -70,9 +133,10 @@
                     },
                     zIndex: local[3]
                 });
+
                 marker.addListener('click', function() {
                     // 連結景點介紹內頁
-                    location.href = '/Home/Overlook';
+                    location.href = @Url.Content("~/Home/Overlook");
                 });
             }
         }

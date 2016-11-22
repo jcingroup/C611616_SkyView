@@ -14,7 +14,7 @@ namespace SkyView.Service
         string csql = "";
         DataSet ds = new DataSet();
 
-        public DataTable List(string scenic_id = "",string sort = "")
+        public DataTable List(string scenic_id = "", string sort = "", string area_id = "")
         {
             SqlConnection conn = new SqlConnection(conn_str);
             if (conn.State == ConnectionState.Closed)
@@ -23,15 +23,21 @@ namespace SkyView.Service
             }
 
             csql = "select "
-                 + "  a.*, b.area_name "
+                 + "  a.*, b.area_name,c.img_file "
                  + "from "
                  + "  scenic_bt a "
                  + "left join area_bt b on a.area_id = b._SEQ_ID "
+                 + "left join scenic_img c on a._SEQ_ID = c.img_no and img_sty = 'S' "
                  + "where "
                  + "  a.status <> 'D' ";
             if(scenic_id.Trim().Length >0)
             {
                 csql = csql + " and a._SEQ_ID = " + scenic_id + " ";
+            }
+
+            if(area_id.Trim().Length >0)
+            {
+                csql = csql + " and a.area_id = '" + area_id + "' ";
             }
 
             if(sort.Trim().Length > 0)
@@ -58,6 +64,17 @@ namespace SkyView.Service
         }
 
         //新增
+        /// <summary>
+        /// 景觀新增
+        /// </summary>
+        /// <param name="area_id">區域編號</param>
+        /// <param name="scenic_name">景觀名稱</param>
+        /// <param name="longitude">經度</param>
+        /// <param name="latitude">緯度</param>
+        /// <param name="scenic_desc">景觀描述</param>
+        /// <param name="show">顯示狀態</param>
+        /// <param name="img_no">圖片群編</param>
+        /// <returns></returns>
         public string Insert(string area_id = "",string scenic_name = "", string longitude = "", string latitude = "",string scenic_desc = "",string show = "", string img_no = "")
         {
             string c_msg = "";
@@ -270,7 +287,7 @@ namespace SkyView.Service
         }
 
         //區域資料
-        public DataTable AreaList()
+        public DataTable AreaList(string area_id = "")
         {
             SqlConnection conn = new SqlConnection(conn_str);
             if (conn.State == ConnectionState.Closed)
@@ -278,7 +295,17 @@ namespace SkyView.Service
                 conn.Open();
             }
 
-            csql = "select * from area_bt where status = 'Y' order by _SEQ_ID ";
+            csql = "select "
+                 + "  * "
+                 + "from "
+                 + "  area_bt "
+                 + "where "
+                 + "  status = 'Y' ";
+            if(area_id.Trim().Length > 0)
+            {
+                csql = csql + " and _SEQ_ID = " + area_id + " ";
+            }
+            csql = csql + "order by _SEQ_ID ";
           
 
             if (ds.Tables["area"] != null)
