@@ -77,7 +77,7 @@
                     @:,
                 }
 
-                @:['@scenic_name',@latitude,@longitude,@(d_lookList.Rows.Count - 1 - i),image_setting('@Url.Content(img_file)'),@scenic_id]
+                @:['@scenic_name',@latitude,@longitude,@(d_lookList.Rows.Count - 1 - i),image_setting('@Url.Content(img_file)'),'@scenic_id']
              }
         ];
 
@@ -135,12 +135,15 @@
                         color: '#fff',
                         fontSize: '11px',
                     },
-                    zIndex: local[3]
+                    zIndex: local[3],
+                    name: local[5]
                 });
 
                 @*google.maps.event.addListener(marker, 'click', function () {
                     // 連結景點介紹內頁
-                    location.href = '@Url.Content("~/Home/Overlook")?scenic_id=' + local[5];
+                    //location.href = '@Url.Content("~/Home/Overlook")?scenic_id=' + local[5];
+                    var c_url = '@Url.Content("~/Home/Overlook")?scenic_id=' + this.name;
+                    alert(i + '_' + c_url);
                     //location.href = '/Show/ViewW?scnid=' + marker.name;
                     //location.href = '/Show/ViewW?scnid=' + this.name;
                     ///jQueryPost/PostingData
@@ -148,12 +151,14 @@
                     //map.setCenter(marker.getPosition());
                 });*@
 
-                
                 marker.addListener('click', function() {
                     // 連結景點介紹內頁
-                    location.href = '@Url.Content("~/Home/Overlook")?scenic_id=' + local[5];
+                    var c_url = '@Url.Content("~/Home/Overlook")?scenic_id=' + this.name;
+                    //alert(c_url);
+                    location.href = c_url;
+
                 });
-                
+
             }
         }
 
