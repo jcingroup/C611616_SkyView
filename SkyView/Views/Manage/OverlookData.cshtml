@@ -90,7 +90,7 @@
 @* 引用 ajaxfileupload *@
 <script src="~/Scripts/ajaxfileupload.js"></script>
 @*1.引用ckeditor.js*@
-<script src="~/ckeditor/ckeditor.js"></script> 
+<script src="~/ckeditor/ckeditor.js"></script>
 <script>
     function form_ok() {
         form1.submit();
@@ -115,7 +115,7 @@
                 //alert(JData);
                 data = handleAjaxVPNMsg(JData);
                 i = 0;
-                c_html = "";                
+                c_html = "";
 
                 $.each($.parseJSON(data), function (idx, obj) {
                     i = i + 1;
@@ -233,7 +233,7 @@
 </script>
 
 <div class="alert alert-warning text-sm p-a-small">
-    景點小圖修改檔下載(PSD)，教學文件下載
+    <a href="~/Content/doc/googleMapIcon.psd" target="new">景點小圖範例檔下載(PSD)</a>，<a href="~/Content/doc/googleMapIcon.html" target="new">景點小圖製作教學影片</a>
 </div>
 
 <form action="Save" class="form form-sm" name="form1" id="form1" method="post" enctype="multipart/form-data" >
@@ -354,7 +354,7 @@
                 景點大圖
             </label>
             <div class="col-xs-10">
-                
+
                 <table>
                     <tr>
                         <td style="width:80%;text-align:left;">

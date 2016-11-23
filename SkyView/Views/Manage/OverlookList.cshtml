@@ -19,7 +19,7 @@
     string scenic_count = "";
     string show = "";
     string show_class = "";
-    
+
     row_count = dt.Rows.Count;
     if(row_count % page_count > 0)
     {
@@ -114,7 +114,7 @@
                         <button type="button" class="btn btn-link btn-lg" onclick="location.href='Edit?scenic_id=@scenic_id'" ><i class="fa-pencil"></i></button>
                     </td>
                     <td class="text-xs-center">@area_name</td>
-                    <td class="text-xs-center">@scenic_name</td>
+                    <td>@scenic_name</td>
                     <td class="text-xs-center">@scenic_count</td>
                     <td class="text-xs-center"><span class="w3-tag @show_class w3-round">@show</span></td>
                 </tr>
