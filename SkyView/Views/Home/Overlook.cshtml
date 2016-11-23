@@ -52,7 +52,7 @@
 
 @Html.Partial("SidebarOverlook")
 
-<section class="overlook-content col-9 p-r-0">
+<section class="overlook-content col-md-9 p-r-0">
     <div class="swiper-container gallery">
         <ul class="swiper-wrapper list-unstyled">
             @* 套程式 *@
@@ -72,7 +72,7 @@
             {
                 @*<li class="swiper-slide" style="background-image: url(/Content/images/Overlook/01.jpg)"></li>*@
                 @:<li class="swiper-slide" style="background-image: url(@Url.Content("~/Images/" + d_lookList_Img.Rows[i]["img_file"].ToString()))"></li>
-            } 
+            }
         </ul>
     </div>
 
