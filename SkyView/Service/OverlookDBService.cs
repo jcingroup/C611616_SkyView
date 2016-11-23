@@ -14,7 +14,7 @@ namespace SkyView.Service
         string csql = "";
         DataSet ds = new DataSet();
 
-        public DataTable List(string scenic_id = "", string sort = "", string area_id = "")
+        public DataTable List(string scenic_id = "", string sort = "", string area_id = "", string status = "")
         {
             SqlConnection conn = new SqlConnection(conn_str);
             if (conn.State == ConnectionState.Closed)
@@ -22,22 +22,61 @@ namespace SkyView.Service
                 conn.Open();
             }
 
+            string[] Array_scenic_id;
+            string[] Array_area_id;
+            string str_scenic_id = "";
+            string str_area_id = "";
+
+            if(area_id.Trim().Length > 0)
+            {
+                Array_area_id = area_id.Split(',');
+
+                for (int i = 0; i < Array_area_id.Length; i++)
+                {
+                    if (i > 0)
+                    {
+                        str_area_id = str_area_id + ",";
+                    }
+                    str_area_id = str_area_id + "'" + Array_area_id[i] + "'";
+                }
+            }
+
+            if (scenic_id.Trim().Length > 0)
+            {
+                Array_scenic_id = scenic_id.Split(',');
+
+                for (int i = 0; i < Array_scenic_id.Length; i++)
+                {
+                    if (i > 0)
+                    {
+                        str_scenic_id = str_scenic_id + ",";
+                    }
+                    str_scenic_id = str_scenic_id + " " + Array_scenic_id[i] + " ";
+                }
+            }
+
             csql = "select "
-                 + "  a.*, b.area_name,c.img_file "
+                 + "  a.*, b.area_name,c.img_file,d.img_id, e.img_file as img_file_b, e.img_desc as img_desc_b "
                  + "from "
                  + "  scenic_bt a "
                  + "left join area_bt b on a.area_id = b._SEQ_ID "
                  + "left join scenic_img c on a._SEQ_ID = c.img_no and img_sty = 'S' "
+                 + "left join (select img_no,min(_SEQ_ID) as img_id from scenic_img where img_sty = 'B' group by img_no) d on a._SEQ_ID = d.img_no "
+                 + "left join scenic_img e on d.img_id = e._SEQ_ID "
                  + "where "
                  + "  a.status <> 'D' ";
-            if(scenic_id.Trim().Length >0)
+            if(status.Trim().Length > 0)
             {
-                csql = csql + " and a._SEQ_ID = " + scenic_id + " ";
+                csql = csql + " and a.status = '" + status + "' ";
+            }
+            if(str_scenic_id.Trim().Length >0)
+            {
+                csql = csql + " and a._SEQ_ID in (" + str_scenic_id + ") ";
             }
 
-            if(area_id.Trim().Length >0)
+            if(str_area_id.Trim().Length >0)
             {
-                csql = csql + " and a.area_id = '" + area_id + "' ";
+                csql = csql + " and a.area_id in (" + str_area_id + ") ";
             }
 
             if(sort.Trim().Length > 0)
@@ -289,6 +328,18 @@ namespace SkyView.Service
         //區域資料
         public DataTable AreaList(string area_id = "")
         {
+            string[] carea_id;
+            string str_area_id = "";
+            carea_id = area_id.Split(',');
+            for(int i=0; i<carea_id.Length; i++)
+            {
+                if(i > 0)
+                {
+                    str_area_id = str_area_id + ",";
+                }
+                str_area_id = str_area_id + carea_id[i];
+            }
+
             SqlConnection conn = new SqlConnection(conn_str);
             if (conn.State == ConnectionState.Closed)
             {
@@ -303,7 +354,7 @@ namespace SkyView.Service
                  + "  status = 'Y' ";
             if(area_id.Trim().Length > 0)
             {
-                csql = csql + " and _SEQ_ID = " + area_id + " ";
+                csql = csql + " and _SEQ_ID in (" + str_area_id + ") ";
             }
             csql = csql + "order by _SEQ_ID ";
           
@@ -399,6 +450,51 @@ namespace SkyView.Service
             return c_msg;
         }
 
+        public string add_count(string scenic_id="")
+        {
+            string c_msg = "";
+
+            SqlConnection conn = new SqlConnection(conn_str);
+            if (conn.State == ConnectionState.Closed)
+            {
+                conn.Open();
+            }
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+
+            try
+            {
+                csql = "update "
+                     + "  scenic_bt "
+                     + "set "
+                     + "  scenic_count = scenic_count + 1 "
+                     + ", _UPD_ID = 'System' "
+                     + ", _UPD_DT = getdate() "
+                     + "where "
+                     + "  _SEQ_ID = " + scenic_id + " ";
+
+                cmd.CommandText = csql;
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                c_msg = ex.Message;
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+                cmd = null;
+                conn = null;
+            }
+
+            return c_msg;
+
+        }
+
         public string Img_Update(string img_id = "", string img_file = "")
         {
             string c_msg = "";
@@ -440,17 +536,30 @@ namespace SkyView.Service
             return c_msg;
         }
 
-        public DataTable Img_List(string img_no = "",string img_sty = "B")
+        public DataTable Img_List(string img_no = "", string img_sty = "B")
         {
             DataSet dt = new DataSet();
             DataTable d_t;
             SqlConnection conn = new SqlConnection(conn_str);
+            string[] cimg_no;
+            string str_img_no = "";
+            cimg_no = img_no.Split(',');
+
+            for (int i = 0; i < cimg_no.Length ; i++)
+            {
+                if(i > 0)
+                {
+                    str_img_no = str_img_no + ",";
+                }
+                str_img_no = str_img_no + "'" + cimg_no[i] + "'";
+            }
+
             if (conn.State == ConnectionState.Closed)
             {
                 conn.Open();
             }
 
-            csql = "select * from scenic_img where status = 'Y' and img_no = '" + img_no + "' and img_sty= '" + img_sty + "' order by _SEQ_ID ";
+            csql = "select * from scenic_img where status = 'Y' and img_no in (" + str_img_no + ") and img_sty= '" + img_sty + "' order by _SEQ_ID ";
 
 
             if (dt.Tables["img"] != null)

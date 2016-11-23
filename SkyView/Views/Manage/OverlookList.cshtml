@@ -67,6 +67,13 @@
 
     end_page = total_page;
 
+    min_row = 10 * (page - 1) + 1;
+    max_row = 10 * page;
+    if(max_row > row_count)
+    {
+        max_row = row_count;
+    }
+
 }
 
 @section Breadcrumb {
@@ -105,7 +112,7 @@
                 <th>
                     <button class="text-xs-center th-sort-toggle">地區</button>
                 </th>
-                <th>
+                <th class="text-xs-center">
                     @* 如不需要排序功能: 純文字即可 *@
                     景點名稱
                 </th>
@@ -123,7 +130,7 @@
             @* 建議: 1頁10筆資料 *@
             @if (dt.Rows.Count > 0)
             {
-                for (int i = 0; i < dt.Rows.Count; i++)
+                for (int i = min_row - 1; i < max_row; i++)
                 {
                     scenic_id = dt.Rows[i]["_SEQ_ID"].ToString();
                     area_name = dt.Rows[i]["area_name"].ToString();
@@ -149,7 +156,7 @@
                             <button type="button" class="btn btn-link btn-lg" onclick="location.href='Edit?scenic_id=@scenic_id'"><i class="fa-pencil"></i></button>
                         </td>
                         <td class="text-xs-center">@area_name</td>
-                        <td class="text-xs-center">@scenic_name</td>
+                        <td class="text-xs-left">&nbsp;@scenic_name</td>
                         <td class="text-xs-center">@scenic_count</td>
                         <td class="text-xs-center"><span class="w3-tag @show_class w3-round">@show</span></td>
                     </tr>

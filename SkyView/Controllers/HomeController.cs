@@ -22,6 +22,11 @@ namespace SkyView.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            DataTable d_scenic;
+            //抓取前三名資料
+            d_scenic = OverlookDB.List("","a.scenic_count desc ","","Y");
+            ViewData["d_scenic"] = d_scenic;
+
             ViewBag.IsFirstPage = true;
             return View();
         }
@@ -45,7 +50,7 @@ namespace SkyView.Controllers
             //抓取中心資料
             d_area = OverlookDB.AreaList(area_id);
             //抓取景觀資料
-            d_lookList = OverlookDB.List("", "", area_id);
+            d_lookList = OverlookDB.List("", "", area_id,"Y");
             //抓取小圖
 
             ViewBag.d_area = d_area;
@@ -61,7 +66,10 @@ namespace SkyView.Controllers
             DataTable d_lookList;
             DataTable d_lookList_Img;
 
-            d_lookList = OverlookDB.List(scenic_id,"","");
+            //觀看次數 + 1
+            OverlookDB.add_count(scenic_id);
+
+            d_lookList = OverlookDB.List(scenic_id,"","","Y");
             d_lookList_Img = OverlookDB.Img_List(scenic_id, "B");
 
             ViewBag.d_lookList = d_lookList;
