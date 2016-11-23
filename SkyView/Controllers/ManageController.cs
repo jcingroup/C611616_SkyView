@@ -33,13 +33,15 @@ namespace SkyView.Controllers
         }
 
         // 空拍
-        public ActionResult OverlookList()
+        public ActionResult OverlookList(string txt_area_query = "", string txt_scenic_query = "", int page = 1)
         {
             //OverlookDBService OverlookDB = new OverlookDBService();
             DataTable dt = OverlookDB.List("", "");
+            ViewData["page"] = page;
             ViewData["dt"] = dt;
             return View();
         }
+
 
         //新增
         public ActionResult Add()

@@ -8,10 +8,16 @@
     ViewBag.subNav = "sn1-1";
 
     DataTable dt = (DataTable)ViewData["dt"];
-    int page = 0;
     int row_count = 0;
     int page_count = 10;
-    int now_page = 1;
+    int page = (int)ViewData["page"];
+    int pre_page = 0;
+    int top_page = 0;
+    int next_page = 0;
+    int end_page = 0;
+    int min_row = 0;
+    int max_row = 0;
+    int total_page = 0;
 
     string scenic_id = "";
     string area_name = "";
@@ -19,18 +25,47 @@
     string scenic_count = "";
     string show = "";
     string show_class = "";
-    
+
     row_count = dt.Rows.Count;
     if(row_count % page_count > 0)
     {
-        page = (row_count / page_count) + 1;
+        total_page = (row_count / page_count) + 1;
     }
     else
     {
-        page = row_count / page_count;
+        total_page = row_count / page_count;
     }
 
+    if(page > total_page)
+    {
+        page = total_page;
+    }
+    else if(page < 1)
+    {
+        page = 1;
+    }
 
+    top_page = 1;
+
+    if(page > 1)
+    {
+        pre_page = page - 1;
+    }
+    else
+    {
+        pre_page = 1;
+    }
+
+    if (total_page > page)
+    {
+        next_page = page + 1;
+    }
+    else
+    {
+        next_page = total_page;
+    }
+
+    end_page = total_page;
 
 }
 
@@ -44,117 +79,127 @@
 <div class="alert alert-warning p-a-1">
     點閱人數前三名的熱門景點，將會顯示在首頁輪播Banner。
 </div>
+<form name="form1" id="form1" action="" method="post">
+    <header class="table-header">
+        <div class="table-filter">
+            <div class="form-inline">
+                <label class="text-sm">地區</label> @* 如要顯示文字: 把 sr-only 拿掉 *@
+                <input type="text" class="form-control form-control-sm" placeholder="請輸入關鍵字..." name="txt_area_query" id="txt_area_query">
+                <label class="text-sm">景點</label> @* 如要顯示文字: 把 sr-only 拿掉 *@
+                <input type="text" class="form-control form-control-sm" placeholder="請輸入關鍵字..." name="txt_scenic_query" id="txt_scenic_query">
+            </div>
+        </div><!-- table-filter //-->
+    </header>
 
-<header class="table-header">
-    <div class="table-filter">
-        <div class="form-inline">
-            <label class="text-sm">地區</label> @* 如要顯示文字: 把 sr-only 拿掉 *@
-            <input type="text" class="form-control form-control-sm" placeholder="請輸入關鍵字...">
-            <label class="text-sm">景點</label> @* 如要顯示文字: 把 sr-only 拿掉 *@
-            <input type="text" class="form-control form-control-sm" placeholder="請輸入關鍵字...">
-        </div>
-    </div><!-- table-filter //-->
-</header>
-
-<table class="table table-sm table-bordered table-striped table-hover">
-    <colgroup>
-        <col span="2" style="width: 6%">
-        <col style="width: 15%">
-        <col>
-        <col span="2" style="width: 14%">
-    </colgroup>
-    <thead>
-        <tr>
-            <th class="text-xs-center">刪除</th> @* 文字置中: class="text-xs-center" / 置右: class="text-xs-right" *@
-            <th class="text-xs-center">修改</th>
-            <th>
-                <button class="text-xs-center th-sort-toggle">地區</button>
-            </th>
-            <th>
-                @* 如不需要排序功能: 純文字即可 *@
-                景點名稱
-            </th>
-            <th>
-                @* 點選排序功能 (點一下遞增 asc, 點兩下遞減 desc) *@
-                <button class="text-xs-center th-sort-toggle desc">點閱人數</button>
-            </th>
-            <th>
-                @* 點選排序功能 (點一下遞增 asc, 點兩下遞減 desc) *@
-                <button class="text-xs-center th-sort-toggle asc">狀態</button>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @* 建議: 1頁10筆資料 *@
-        @if (dt.Rows.Count > 0)
-        {
-            for (int i = 0; i < dt.Rows.Count; i++)
+    <table class="table table-sm table-bordered table-striped table-hover">
+        <colgroup>
+            <col span="2" style="width: 6%">
+            <col style="width: 15%">
+            <col>
+            <col span="2" style="width: 14%">
+        </colgroup>
+        <thead>
+            <tr>
+                <th class="text-xs-center">刪除</th> @* 文字置中: class="text-xs-center" / 置右: class="text-xs-right" *@
+                <th class="text-xs-center">修改</th>
+                <th>
+                    <button class="text-xs-center th-sort-toggle">地區</button>
+                </th>
+                <th>
+                    @* 如不需要排序功能: 純文字即可 *@
+                    景點名稱
+                </th>
+                <th>
+                    @* 點選排序功能 (點一下遞增 asc, 點兩下遞減 desc) *@
+                    <button class="text-xs-center th-sort-toggle desc">點閱人數</button>
+                </th>
+                <th>
+                    @* 點選排序功能 (點一下遞增 asc, 點兩下遞減 desc) *@
+                    <button class="text-xs-center th-sort-toggle asc">狀態</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @* 建議: 1頁10筆資料 *@
+            @if (dt.Rows.Count > 0)
             {
-                scenic_id = dt.Rows[i]["_SEQ_ID"].ToString();
-                area_name = dt.Rows[i]["area_name"].ToString();
-                scenic_name = dt.Rows[i]["scenic_name"].ToString();
-                scenic_count = dt.Rows[i]["scenic_count"].ToString();
-                if (dt.Rows[i]["status"].ToString() == "Y")
+                for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    show = "顯現";
-                    show_class = "label-success";
-                }
-                else
-                {
-                    show = "隱藏";
-                    show_class = "label-default";
-                }
+                    scenic_id = dt.Rows[i]["_SEQ_ID"].ToString();
+                    area_name = dt.Rows[i]["area_name"].ToString();
+                    scenic_name = dt.Rows[i]["scenic_name"].ToString();
+                    scenic_count = dt.Rows[i]["scenic_count"].ToString();
+                    if (dt.Rows[i]["status"].ToString() == "Y")
+                    {
+                        show = "顯現";
+                        show_class = "label-success";
+                    }
+                    else
+                    {
+                        show = "隱藏";
+                        show_class = "label-default";
+                    }
 
 
+                    <tr>
+                        <td class="text-xs-center">
+                            <button class="btn btn-link btn-lg text-danger" onclick="location.href='Del?scenic_id=@scenic_id'"><i class="fa-times"></i></button>
+                        </td>
+                        <td class="text-xs-center">
+                            <button type="button" class="btn btn-link btn-lg" onclick="location.href='Edit?scenic_id=@scenic_id'"><i class="fa-pencil"></i></button>
+                        </td>
+                        <td class="text-xs-center">@area_name</td>
+                        <td class="text-xs-center">@scenic_name</td>
+                        <td class="text-xs-center">@scenic_count</td>
+                        <td class="text-xs-center"><span class="w3-tag @show_class w3-round">@show</span></td>
+                    </tr>
+                }
+            }
+            else
+            {
                 <tr>
-                    <td class="text-xs-center">
-                        <button class="btn btn-link btn-lg text-danger" onclick="location.href='Del?scenic_id=@scenic_id'" ><i class="fa-times"></i></button>
+                    <td class="text-xs-left" colspan="6">
+                        無資料
                     </td>
-                    <td class="text-xs-center">
-                        <button type="button" class="btn btn-link btn-lg" onclick="location.href='Edit?scenic_id=@scenic_id'" ><i class="fa-pencil"></i></button>
-                    </td>
-                    <td class="text-xs-center">@area_name</td>
-                    <td class="text-xs-center">@scenic_name</td>
-                    <td class="text-xs-center">@scenic_count</td>
-                    <td class="text-xs-center"><span class="w3-tag @show_class w3-round">@show</span></td>
                 </tr>
             }
+        </tbody>
+    </table>
+    <footer class="table-footer clearfix">
+        <button type="button" class="btn btn-sm btn-success pull-xs-left" onclick="location.href='Add'">
+            <i class="fa-plus-circle"></i> 新增
+        </button>
+        <small class="pull-xs-right">第 1-10 筆，共 @row_count 筆</small>
+        <ul class="pager pager-sm">
+            <li>
+                <a href="@Url.Content("~/Manage/OverlookList?page=" + top_page.ToString())"><i class="fa-angle-double-left"></i></a>
+            </li>
+            <li>
+                <a href="@Url.Content("~/Manage/OverlookList?page=" + pre_page.ToString())"><i class="fa-angle-left"></i></a>
+            </li>
+            <li class="form-inline">
+                <label>第</label>
+                <input type="text" class="form-control form-control-sm text-xs-center" style="width:100px" name="page" id="page" value="@page">
+                <label>頁，共 @total_page 頁</label>
+            </li>
+            <li>
+                <a href="@Url.Content("~/Manage/OverlookList?page=" + next_page.ToString())"><i class="fa-angle-right"></i></a>
+            </li>
+            <li>
+                <a href="@Url.Content("~/Manage/OverlookList?page=" + end_page.ToString())"><i class="fa-angle-double-right"></i></a>
+            </li>
+        </ul>
+    </footer>
+</form>
+<script>
+    $('#page').on('keydown', function (e) {
+        if (e.which == 13) {
+            //alert('clicked');
+            document.form1.submit();
         }
-        else
-        {
-            <tr>
-                <td class="text-xs-left" colspan="6">
-                    無資料
-                </td>
-            </tr>
-        }
+    });
 
-
-
-    </tbody>
-</table>
-<footer class="table-footer clearfix">
-    <button type="button" class="btn btn-sm btn-success pull-xs-left" onclick="location.href='Add'">
-        <i class="fa-plus-circle"></i> 新增
-    </button>
-    <small class="pull-xs-right">第 1-10 筆，共 @row_count 筆</small>
-    <ul class="pager pager-sm">
-        <li>
-            <a href=""><i class="fa-angle-double-left"></i></a>
-        </li>
-        <li>
-            <a href=""><i class="fa-angle-left"></i></a>
-        </li>
-        <li class="form-inline">
-            <label>第</label>
-            <input type="text" class="form-control form-control-sm text-xs-center" style="width:100px" name="c_page" id="c_page" value="@now_page">
-            <label>頁，共 @page 頁</label>
-        </li>
-        <li>
-            <a href=""><i class="fa-angle-right"></i></a>
-        </li>
-        <li>
-            <a href=""><i class="fa-angle-double-right"></i></a>
-        </li>
-    </ul>
-</footer>
+    //$('#page').click(function (e) {
+    //    alert('clicked');
+    //});
+</script>
