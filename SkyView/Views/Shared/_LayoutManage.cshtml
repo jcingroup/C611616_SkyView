@@ -16,30 +16,41 @@
 <body class="@ViewBag.BodyClass">
     <div id="wrapper">
         @if (ViewBag.IsFirstPage)
-        { }
-        else {
-            <header id="header" class="navbar navbar-fixed-top navbar-dark bg-primary">
-                <h1 class="logo">
-                    <a class="navbar-brand" href="~/Manage" title="回登入首頁" tabindex="-1">都發局-桃園新視界 管理系統</a>
-                </h1><!-- logo -->
-                <ul class="nav navbar-nav pull-xs-right">
-                    <li class="nav-item">
-                        <span class="nav-link">
-                            <i class="fa-user"></i> <span>登入身分: admin
-                        </span>
-                    </li>
-                    <li class="nav-item bg-warning">
-                        <a href="~/Home" class="nav-link">
-                            <i class="fa-home"></i> 回首頁
-                        </a>
-                    </li>
-                    <li class="nav-item bg-success">
-                        <a href="~/Login/Logout" class="nav-link">
-                            <i class="fa-power-off"></i> 登出
-                        </a>
-                    </li>
-                </ul>
-            </header><!-- header //-->
+        {
+
+        }
+        else
+        {
+            if (Convert.ToString(Session["IsLogined"]) != "Y")
+            {
+                Response.Redirect(Url.Content("~/Manage/Login"));
+            }
+            else
+            {
+                <header id="header" class="navbar navbar-fixed-top navbar-dark bg-primary">
+                    <h1 class="logo">
+                        <a class="navbar-brand" href="~/Manage" title="回登入首頁" tabindex="-1">都發局-桃園新視界 管理系統</a>
+                    </h1><!-- logo -->
+                    <ul class="nav navbar-nav pull-xs-right">
+                        <li class="nav-item">
+                            <span class="nav-link">
+                                <i class="fa-user"></i> <span>
+                                    登入身分: @Convert.ToString(Session["account_name"])
+                                </span>
+                        </li>
+                        <li class="nav-item bg-warning">
+                            <a href="@Url.Content("~/Home")" class="nav-link">
+                                <i class="fa-home"></i> 回首頁
+                            </a>
+                        </li>
+                        <li class="nav-item bg-success">
+                            <a href="@Url.Content("~/Manage/Logout")" class="nav-link">
+                                <i class="fa-power-off"></i> 登出
+                            </a>
+                        </li>
+                    </ul>
+                </header><!-- header //-->
+            }
         }
         <main id="main">
 

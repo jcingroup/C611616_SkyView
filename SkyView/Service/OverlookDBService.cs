@@ -582,5 +582,47 @@ namespace SkyView.Service
 
             return d_t;
         }
+
+        public DataTable User_Info(string account = "")
+        {
+            DataSet dt = new DataSet();
+            DataTable d_t;
+            SqlConnection conn = new SqlConnection(conn_str);
+            
+            if (conn.State == ConnectionState.Closed)
+            {
+                conn.Open();
+            }
+
+            csql = "select "
+                 + "  * "
+                 + "from "
+                 + "  member "
+                 + "where "
+                 + "   status <> 'D' "
+                 + "and account = '" + account + "' "
+                 + "order by "
+                 + "  _SEQ_ID ";
+
+            if (dt.Tables["user_info"] != null)
+            {
+                dt.Tables["user_info"].Clear();
+            }
+
+            SqlDataAdapter user_info_ada = new SqlDataAdapter(csql, conn);
+            user_info_ada.Fill(dt, "user_info");
+            user_info_ada = null;
+
+            d_t = dt.Tables["user_info"];
+
+            if (conn.State == ConnectionState.Open)
+            {
+                conn.Close();
+            }
+            conn = null;
+            dt = null;
+
+            return d_t;
+        }
     }
 }
