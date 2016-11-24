@@ -624,5 +624,46 @@ namespace SkyView.Service
 
             return d_t;
         }
+
+        public string User_Update(string account = "",string pwd = "")
+        {
+            string c_msg = "";
+            SqlConnection conn = new SqlConnection(conn_str);
+            if (conn.State == ConnectionState.Closed)
+            {
+                conn.Open();
+            }
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+
+            try
+            {
+                csql = "update "
+                     + "  member "
+                     + "set "
+                     + "  pwd = '" + pwd + "' "
+                     + "where "
+                     + "  account = '" + account + "' ";
+
+                cmd.CommandText = csql;
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                c_msg = ex.Message;
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+                cmd = null;
+                conn = null;
+            }
+
+            return c_msg;
+        }
     }
 }

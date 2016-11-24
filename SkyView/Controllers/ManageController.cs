@@ -48,7 +48,6 @@ namespace SkyView.Controllers
         public ActionResult Login_Chk(string account, string pwd)
         {
             DataTable user_info;
-            string c_form = "";
             string cmsg = "";
             try
             {
@@ -141,7 +140,7 @@ namespace SkyView.Controllers
             Session.Remove("Account_Name");
             Session.Remove("Rank");
 
-            return Redirect(Url.Content("~/Home"));
+            return Redirect(Url.Content("~/Manage"));
         }
 
         // 空拍
@@ -153,8 +152,7 @@ namespace SkyView.Controllers
             ViewData["dt"] = dt;
             return View();
         }
-
-
+        
         //新增
         public ActionResult Add()
         {
@@ -221,6 +219,38 @@ namespace SkyView.Controllers
         public ActionResult ChangePW()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePW(string now_pwd,string new_pwd, string chk_new_pwd)
+        {
+            string Account = Convert.ToString(Session["Account"]);
+            string cmsg = "";
+            DataTable user_info;
+            //抓取資料
+            user_info = OverlookDB.User_Info(Account);
+            //檢查登入密碼是否正確
+            if(now_pwd == user_info.Rows[0]["pwd"].ToString())
+            {
+                OverlookDB.User_Update(Account, new_pwd);
+            }
+            else
+            {
+                if (cmsg.Trim().Length > 0)
+                {
+                    cmsg = cmsg + "\n";
+                }
+                cmsg = cmsg + "密碼錯誤，請重新輸入。";
+            }
+
+            if(cmsg.Trim().Length == 0)
+            {
+                cmsg = "Y";
+            }
+
+            TempData["message"] = cmsg;
+            return View();
+
         }
 
         public ActionResult Upload(string img_no,string img_sta)
