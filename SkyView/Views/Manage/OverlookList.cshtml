@@ -27,6 +27,36 @@
     string show_class = "";
     string txt_scenic_query = (string)ViewData["txt_scenic_query"];
     string txt_area_query = (string)ViewData["txt_area_query"];
+    string txt_sort = (string)ViewData["txt_sort"];
+    string txt_a_d = (string)ViewData["txt_a_d"];
+
+    string a_d = "";
+
+    if(txt_a_d == "")
+    {
+        a_d = "asc";
+    }
+    else
+    {
+        a_d = "desc";
+    }
+
+    string class_area = "";
+    string class_scenic_count = "";
+    string class_status = "";
+
+    switch(txt_sort)
+    {
+        case "area":
+            class_area = a_d;
+            break;
+        case "status":
+            class_status = a_d;
+            break;
+        case "scenic_count":
+            class_scenic_count = a_d;
+            break;
+    }
 
     row_count = dt.Rows.Count;
     if(row_count % page_count > 0)
@@ -76,12 +106,12 @@
         max_row = row_count;
     }
 
-}
+            }
 
-@section Breadcrumb {
+            @section Breadcrumb {
     <li><i class="fa-caret-right"></i> 空拍景點管理</li>
     <li><i class="fa-angle-right"></i> @ViewBag.Crumb</li>
-}
+        }
 
 <h3 class="h3">@ViewBag.Crumb</h3>
 
@@ -89,6 +119,8 @@
     點閱人數前三名的熱門景點，將會顯示在首頁輪播Banner。
 </div>
 <form name="form1" id="form1" action="" method="post">
+    <input type="hidden" id="txt_sort" name="txt_sort" value="@txt_sort" />
+    <input type="hidden" id="txt_a_d" name="txt_a_d" value="@txt_a_d" />
     <header class="table-header">
         <div class="table-filter">
             <div class="form-inline">
@@ -113,7 +145,7 @@
                 <th class="text-xs-center">刪除</th> @* 文字置中: class="text-xs-center" / 置右: class="text-xs-right" *@
                 <th class="text-xs-center">修改</th>
                 <th>
-                    <button class="text-xs-center th-sort-toggle">地區</button>
+                    <button class="text-xs-center th-sort-toggle @class_area" name="btn_area" id="btn_area" onclick="sort('area');">地區</button>
                 </th>
                 <th class="text-xs-center">
                     @* 如不需要排序功能: 純文字即可 *@
@@ -121,34 +153,34 @@
                 </th>
                 <th>
                     @* 點選排序功能 (點一下遞增 asc, 點兩下遞減 desc) *@
-                    <button class="text-xs-center th-sort-toggle desc">點閱人數</button>
+                    <button class="text-xs-center th-sort-toggle @class_scenic_count" name="btn_scenic_count" id="btn_scenic_count" onclick="sort('scenic_count');" >點閱人數</button>
                 </th>
                 <th>
                     @* 點選排序功能 (點一下遞增 asc, 點兩下遞減 desc) *@
-                    <button class="text-xs-center th-sort-toggle asc">狀態</button>
+                    <button class="text-xs-center th-sort-toggle @class_status" name="btn_status" id="btn_status" onclick="sort('status');">狀態</button>
                 </th>
             </tr>
         </thead>
         <tbody>
             @* 建議: 1頁10筆資料 *@
             @if (dt.Rows.Count > 0)
+        {
+            for (int i = min_row - 1; i < max_row; i++)
             {
-                for (int i = min_row - 1; i < max_row; i++)
+                scenic_id = dt.Rows[i]["_SEQ_ID"].ToString();
+                area_name = dt.Rows[i]["area_name"].ToString();
+                scenic_name = dt.Rows[i]["scenic_name"].ToString();
+                scenic_count = dt.Rows[i]["scenic_count"].ToString();
+                if (dt.Rows[i]["status"].ToString() == "Y")
                 {
-                    scenic_id = dt.Rows[i]["_SEQ_ID"].ToString();
-                    area_name = dt.Rows[i]["area_name"].ToString();
-                    scenic_name = dt.Rows[i]["scenic_name"].ToString();
-                    scenic_count = dt.Rows[i]["scenic_count"].ToString();
-                    if (dt.Rows[i]["status"].ToString() == "Y")
-                    {
-                        show = "顯現";
-                        show_class = "label-success";
-                    }
-                    else
-                    {
-                        show = "隱藏";
-                        show_class = "label-default";
-                    }
+                    show = "顯現";
+                    show_class = "label-success";
+                }
+                else
+                {
+                    show = "隱藏";
+                    show_class = "label-default";
+                }
 
 
                     <tr>
@@ -223,6 +255,58 @@
         }
     });
 
+    function sort(c_sort)
+    {
+        var pre_sort = $('#txt_sort').val();
+        var pre_a_d = $('#txt_a_d').val();
+        var a_d = "";
+        var s_sort = "";
+        var class_a_d = "";
+
+        s_sort = c_sort;
+        if (pre_sort == c_sort) {
+            if (pre_a_d == "") {
+                a_d = "desc";
+            }
+            else {
+                a_d = "";
+            }
+        }
+        else {
+            a_d = "";
+        }
+
+        //alert("pre_sort:" + pre_sort + ";pre_a_d:" + pre_a_d + ";a_d:" + a_d + ";s_sort=" + s_sort)
+
+        $('#txt_sort').val(s_sort);
+        $('#txt_a_d').val(a_d);
+
+        $('#form1').submit();
+
+    }
+
+    //$('#btn_area').click(function (e) {
+    //    var pre_sort = $('#txt_sort').val();
+    //    var pre_a_d = $('#txt_a_d').val();
+    //    var a_d = "";
+    //    var sort = "";
+    //    if(pre_sort == "area")
+    //    {
+    //        if(pre_a_d == "")
+    //        {
+    //            a_d = "desc";
+    //        }
+    //        else
+    //        {
+    //            a_d = "";
+    //        }
+    //    }
+    //    else
+    //    {
+    //        sort = "area";
+    //        a_d = "";
+    //    }
+    //});
     //$('#page').click(function (e) {
     //    alert('clicked');
     //});

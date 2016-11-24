@@ -141,14 +141,37 @@ namespace SkyView.Controllers
         }
 
         // 空拍
-        public ActionResult OverlookList(string txt_area_query = "", string txt_scenic_query = "", int page = 1)
+        public ActionResult OverlookList(string txt_area_query = "", string txt_scenic_query = "", int page = 1,string txt_sort = "",string txt_a_d = "")
         {
-            //OverlookDBService OverlookDB = new OverlookDBService();
-            DataTable dt = OverlookDB.List("", "","","",txt_area_query,txt_scenic_query);
+            //定義變數
+            string c_sort = "";
+            DataTable dt;
+
+            //排序設定
+            if (txt_sort.Trim().Length > 0)
+            {
+                c_sort = c_sort + "a1." + txt_sort;
+                if (txt_sort == "area")
+                {
+                    c_sort = c_sort + "_name";
+                }
+            }
+            if(txt_a_d.Trim().Length > 0)
+            {
+                c_sort = c_sort + " " + txt_a_d;
+            }
+
+            //抓取景觀資料
+            dt = OverlookDB.List("",c_sort,"","",txt_area_query,txt_scenic_query);
+
+            //設定傳值
             ViewData["page"] = page;
             ViewData["dt"] = dt;
             ViewData["txt_area_query"] = txt_area_query;
             ViewData["txt_scenic_query"] = txt_scenic_query;
+            ViewData["txt_sort"] = txt_sort;
+            ViewData["txt_a_d"] = txt_a_d;
+
             return View();
         }
         
