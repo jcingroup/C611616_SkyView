@@ -14,7 +14,7 @@ namespace SkyView.Service
         string csql = "";
         DataSet ds = new DataSet();
 
-        public DataTable List(string scenic_id = "", string sort = "", string area_id = "", string status = "")
+        public DataTable List(string scenic_id = "", string sort = "", string area_id = "", string status = "",string area_query = "",string scenic_query = "")
         {
             SqlConnection conn = new SqlConnection(conn_str);
             if (conn.State == ConnectionState.Closed)
@@ -24,8 +24,12 @@ namespace SkyView.Service
 
             string[] Array_scenic_id;
             string[] Array_area_id;
+            string[] Array_area_query;
+            string[] Array_scenic_query;
             string str_scenic_id = "";
             string str_area_id = "";
+            string str_area_query = "";
+            string str_scenic_query = "";
 
             if(area_id.Trim().Length > 0)
             {
@@ -55,6 +59,38 @@ namespace SkyView.Service
                 }
             }
 
+            if (area_query.Trim().Length > 0)
+            {
+                Array_area_query = area_query.Split(',');
+                str_area_query = "";
+                str_area_query = str_area_query + "(";
+                for (int i = 0; i < Array_area_query.Length; i++)
+                {
+                    if (i > 0)
+                    {
+                        str_area_query = str_area_query + " or ";
+                    }
+                    str_area_query = str_area_query + " b.area_name like '%" + Array_area_query[i] + "%' ";
+                }
+                str_area_query = str_area_query + ")";
+            }
+
+            if (scenic_query.Trim().Length > 0)
+            {
+                Array_scenic_query = scenic_query.Split(',');
+                str_scenic_query = "";
+                str_scenic_query = str_scenic_query + "(";
+                for (int i = 0; i < Array_scenic_query.Length; i++)
+                {
+                    if (i > 0)
+                    {
+                        str_scenic_query = str_scenic_query + " or ";
+                    }
+                    str_scenic_query = str_scenic_query + " a.scenic_name like '%" + Array_scenic_query[i] + "%' ";
+                }
+                str_scenic_query = str_scenic_query + ")";
+            }
+
             csql = "select "
                  + "  a.*, b.area_name,c.img_file,d.img_id, e.img_file as img_file_b, e.img_desc as img_desc_b "
                  + "from "
@@ -77,6 +113,16 @@ namespace SkyView.Service
             if(str_area_id.Trim().Length >0)
             {
                 csql = csql + " and a.area_id in (" + str_area_id + ") ";
+            }
+
+            if(str_area_query.Trim().Length > 0)
+            {
+                csql = csql + " and " + str_area_query + " ";
+            }
+
+            if(str_scenic_query.Trim().Length > 0)
+            {
+                csql = csql + " and " + str_scenic_query + " ";
             }
 
             if(sort.Trim().Length > 0)

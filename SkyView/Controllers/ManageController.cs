@@ -144,9 +144,11 @@ namespace SkyView.Controllers
         public ActionResult OverlookList(string txt_area_query = "", string txt_scenic_query = "", int page = 1)
         {
             //OverlookDBService OverlookDB = new OverlookDBService();
-            DataTable dt = OverlookDB.List("", "");
+            DataTable dt = OverlookDB.List("", "","","",txt_area_query,txt_scenic_query);
             ViewData["page"] = page;
             ViewData["dt"] = dt;
+            ViewData["txt_area_query"] = txt_area_query;
+            ViewData["txt_scenic_query"] = txt_scenic_query;
             return View();
         }
         

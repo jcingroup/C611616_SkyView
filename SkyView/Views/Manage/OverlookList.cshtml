@@ -25,6 +25,8 @@
     string scenic_count = "";
     string show = "";
     string show_class = "";
+    string txt_scenic_query = (string)ViewData["txt_scenic_query"];
+    string txt_area_query = (string)ViewData["txt_area_query"];
 
     row_count = dt.Rows.Count;
     if(row_count % page_count > 0)
@@ -91,9 +93,10 @@
         <div class="table-filter">
             <div class="form-inline">
                 <label class="text-sm">地區</label> @* 如要顯示文字: 把 sr-only 拿掉 *@
-                <input type="text" class="form-control form-control-sm" placeholder="請輸入關鍵字..." name="txt_area_query" id="txt_area_query">
+                <input type="text" class="form-control form-control-sm" placeholder="請輸入關鍵字..." name="txt_area_query" id="txt_area_query" value="@txt_area_query" >
                 <label class="text-sm">景點</label> @* 如要顯示文字: 把 sr-only 拿掉 *@
-                <input type="text" class="form-control form-control-sm" placeholder="請輸入關鍵字..." name="txt_scenic_query" id="txt_scenic_query">
+                <input type="text" class="form-control form-control-sm" placeholder="請輸入關鍵字..." name="txt_scenic_query" id="txt_scenic_query" value="@txt_scenic_query" >
+                <small class="text-muted">輸入關鍵字時，如有複合搜尋。請使用逗號 , 作為區隔 ex. 桃園,中壢,龍潭</small>
             </div>
         </div><!-- table-filter //-->
     </header>
@@ -200,6 +203,20 @@
 </form>
 <script>
     $('#page').on('keydown', function (e) {
+        if (e.which == 13) {
+            //alert('clicked');
+            document.form1.submit();
+        }
+    });
+
+    $('#txt_scenic_query').on('keydown', function (e) {
+        if (e.which == 13) {
+            //alert('clicked');
+            document.form1.submit();
+        }
+    });
+
+    $('#txt_area_query').on('keydown', function (e) {
         if (e.which == 13) {
             //alert('clicked');
             document.form1.submit();
