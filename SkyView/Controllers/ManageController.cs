@@ -23,17 +23,14 @@ namespace SkyView.Controllers
         // 後台首頁-導向Login
         public ActionResult Index()
         {
-            string cform = "";
             if(Convert.ToString(Session["IsLogined"]) == "Y")
             {
-                cform = "OverlookList";
+                return RedirectToAction("OverlookList"); 
             }
             else
             {
-                cform = "Login";
+                return View("Login");
             }
-            
-            return View(cform);
 
         }
 
