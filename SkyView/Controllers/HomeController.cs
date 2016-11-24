@@ -24,7 +24,7 @@ namespace SkyView.Controllers
         {
             DataTable d_scenic;
             //抓取前三名資料
-            d_scenic = OverlookDB.List("","a.scenic_count desc ","","Y");
+            d_scenic = OverlookDB.List("","a1.scenic_count desc ","","Y");
             ViewData["d_scenic"] = d_scenic;
 
             ViewBag.IsFirstPage = true;
