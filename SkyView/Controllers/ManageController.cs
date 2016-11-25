@@ -42,7 +42,7 @@ namespace SkyView.Controllers
 
         //登入檢查
         [HttpPost]
-        public ActionResult Login_Chk(string account, string pwd)
+        public ActionResult Login_Chk(string account, string pwd,string ValidCode)
         {
             DataTable user_info;
             string cmsg = "";
@@ -68,44 +68,56 @@ namespace SkyView.Controllers
 
                 if (cmsg.Trim().Length == 0)
                 {
-                    //抓取user資料
-                    user_info = OverlookDB.User_Info(account);
-                    //驗證
-                    if (user_info.Rows.Count == 0)
+                    //比對驗證碼
+                    if (ValidCode != Session["ValidateCode"].ToString())
                     {
                         if (cmsg.Trim().Length > 0)
                         {
                             cmsg = cmsg + "\n";
                         }
-                        cmsg = cmsg + "無此帳號，請再確認。";
+                        cmsg = cmsg + "驗證碼不正確";
                     }
                     else
                     {
-                        if (user_info.Rows[0]["status"].ToString() == "N")
+                        //抓取user資料
+                        user_info = OverlookDB.User_Info(account);
+                        //驗證使用者有無資料
+                        if (user_info.Rows.Count == 0)
                         {
                             if (cmsg.Trim().Length > 0)
                             {
                                 cmsg = cmsg + "\n";
                             }
-                            cmsg = cmsg + "此帳號停用，請再確認。";
+                            cmsg = cmsg + "無此帳號，請再確認。";
                         }
                         else
                         {
-                            if (pwd == user_info.Rows[0]["pwd"].ToString())
-                            {
-                                //輸入值
-                                Session["IsLogined"] = "Y";
-                                Session["Account"] = account;
-                                Session["Account_Name"] = user_info.Rows[0]["account_name"].ToString();
-                                Session["Rank"] = user_info.Rows[0]["rank"].ToString();
-                            }
-                            else
+                            if (user_info.Rows[0]["status"].ToString() == "N")
                             {
                                 if (cmsg.Trim().Length > 0)
                                 {
                                     cmsg = cmsg + "\n";
                                 }
-                                cmsg = cmsg + "密碼錯誤，請重新輸入。";
+                                cmsg = cmsg + "此帳號停用，請再確認。";
+                            }
+                            else
+                            {
+                                if (pwd == user_info.Rows[0]["pwd"].ToString())
+                                {
+                                    //輸入值
+                                    Session["IsLogined"] = "Y";
+                                    Session["Account"] = account;
+                                    Session["Account_Name"] = user_info.Rows[0]["account_name"].ToString();
+                                    Session["Rank"] = user_info.Rows[0]["rank"].ToString();
+                                }
+                                else
+                                {
+                                    if (cmsg.Trim().Length > 0)
+                                    {
+                                        cmsg = cmsg + "\n";
+                                    }
+                                    cmsg = cmsg + "密碼錯誤，請重新輸入。";
+                                }
                             }
                         }
                     }
@@ -432,6 +444,17 @@ namespace SkyView.Controllers
             }
 
             return Content(result);
+        }
+
+        //設置將生成的驗證碼存入Session，並輸出驗證碼圖片
+        [AllowAnonymous]
+        public ActionResult GetValidateCode()
+        {
+            ValidateCode vCode = new ValidateCode();
+            string code = vCode.CreateValidateCode(5);
+            Session["ValidateCode"] = code;
+            byte[] bytes = vCode.CreateValidateGraphic(code);
+            return File(bytes, @"image/jpeg");
         }
     }
 

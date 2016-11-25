@@ -622,6 +622,7 @@
     <Compile Include="Models\WebUser.Controller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\OverlookDBService.cs" />
+    <Compile Include="Service\ValidateCode.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
