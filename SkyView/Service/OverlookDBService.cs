@@ -24,7 +24,7 @@ namespace SkyView.Service
         /// <param name="area_query"></param>
         /// <param name="scenic_query"></param>
         /// <returns></returns>
-        public DataTable List(string scenic_id = "", string sort = "", string area_id = "", string status = "",string area_query = "",string scenic_query = "")
+        public DataTable List(string scenic_id = "", string sort = "", string area_id = "", string status = "", string area_query = "", string scenic_query = "")
         {
             SqlConnection conn = new SqlConnection(conn_str);
             if (conn.State == ConnectionState.Closed)
@@ -41,7 +41,7 @@ namespace SkyView.Service
             string str_area_query = "";
             string str_scenic_query = "";
 
-            if(area_id.Trim().Length > 0)
+            if (area_id.Trim().Length > 0)
             {
                 Array_area_id = area_id.Split(',');
 
@@ -110,43 +110,43 @@ namespace SkyView.Service
                  + "from "
                  + "  scenic_bt a "
                  + "left join area_bt b on a.area_id = b._SEQ_ID "
-                 + "left join scenic_img c on a._SEQ_ID = c.img_no and img_sty = 'S' "
-                 + "left join (select img_no,min(_SEQ_ID) as img_id from scenic_img where img_sty = 'B' group by img_no) d on a._SEQ_ID = d.img_no "
+                 + "left join scenic_img c on Convert(nvarchar(50),a._SEQ_ID) = c.img_no and img_sty = 'S' "
+                 + "left join (select img_no,min(_SEQ_ID) as img_id from scenic_img where img_sty = 'B' group by img_no) d on Convert(nvarchar(50),a._SEQ_ID) = d.img_no "
                  + "left join scenic_img e on d.img_id = e._SEQ_ID "
                  //-----------------------------------------------------------//
                  + ") a1 "
                  + "where "
                  + "  a1.status <> 'D' ";
-            if(status.Trim().Length > 0)
+            if (status.Trim().Length > 0)
             {
                 csql = csql + " and a1.status = '" + status + "' ";
             }
-            if(str_scenic_id.Trim().Length >0)
+            if (str_scenic_id.Trim().Length > 0)
             {
                 csql = csql + " and a1._SEQ_ID in (" + str_scenic_id + ") ";
             }
 
-            if(str_area_id.Trim().Length >0)
+            if (str_area_id.Trim().Length > 0)
             {
                 csql = csql + " and a1.area_id in (" + str_area_id + ") ";
             }
 
-            if(str_area_query.Trim().Length > 0)
+            if (str_area_query.Trim().Length > 0)
             {
                 csql = csql + " and " + str_area_query + " ";
             }
 
-            if(str_scenic_query.Trim().Length > 0)
+            if (str_scenic_query.Trim().Length > 0)
             {
                 csql = csql + " and " + str_scenic_query + " ";
             }
 
-            if(sort.Trim().Length > 0)
+            if (sort.Trim().Length > 0)
             {
                 csql = csql + "order by " + sort + " ";
             }
 
-            if(ds.Tables["scenic"] != null)
+            if (ds.Tables["scenic"] != null)
             {
                 ds.Tables["scenic"].Clear();
             }
@@ -155,7 +155,7 @@ namespace SkyView.Service
             scenic_ada.Fill(ds, "scenic");
             scenic_ada = null;
 
-            if(conn.State == ConnectionState.Open)
+            if (conn.State == ConnectionState.Open)
             {
                 conn.Close();
             }
@@ -191,30 +191,53 @@ namespace SkyView.Service
 
             try
             {
-                csql = "insert into scenic_bt(area_id,scenic_name,longitude,latitude,scenic_desc,status) "
-                     + "values(" + area_id + ",'" + scenic_name + "','" + longitude + "','" + latitude + "','" + scenic_desc + "','" + show + "')";
+                csql = @"insert into scenic_bt(area_id,scenic_name,longitude,latitude,scenic_desc,status) "
+                     + "values(@area_id,@scenic_name,@longitude,@latitude,@scenic_desc,@show)";
 
                 cmd.CommandText = csql;
+
+                ////讓ADO.NET自行判斷型別轉換
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@area_id", area_id);
+                cmd.Parameters.AddWithValue("@scenic_name", scenic_name);
+                cmd.Parameters.AddWithValue("@longitude", longitude);
+                cmd.Parameters.AddWithValue("@latitude", latitude);
+                cmd.Parameters.AddWithValue("@scenic_desc", scenic_desc);
+                cmd.Parameters.AddWithValue("@show", show);
+
                 cmd.ExecuteNonQuery();
 
                 //抓取其編號
-                csql = "select distinct "
+                csql = @"select distinct "
                      + "  _SEQ_ID "
                      + "from "
                      + "   scenic_bt "
                      + "where "
-                     + "    area_id = " + area_id + " "
-                     + "and scenic_name = '" + scenic_name + "' "
-                     + "and longitude = '" + longitude + "' "
-                     + "and latitude = '" + latitude + "' "
-                     + "and scenic_desc = '" + scenic_desc + "' "
-                     + "and status = '" + show + "' ";
-                if(ds.Tables["chk_scenic"] != null)
+                     + "    area_id = @area_id "
+                     + "and scenic_name = @scenic_name "
+                     + "and longitude = @longitude "
+                     + "and latitude = @latitude "
+                     + "and scenic_desc = @scenic_desc "
+                     + "and status = @show ";
+
+                cmd.CommandText = csql;
+
+                ////讓ADO.NET自行判斷型別轉換
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@area_id", area_id);
+                cmd.Parameters.AddWithValue("@scenic_name", scenic_name);
+                cmd.Parameters.AddWithValue("@longitude", longitude);
+                cmd.Parameters.AddWithValue("@latitude", latitude);
+                cmd.Parameters.AddWithValue("@scenic_desc", scenic_desc);
+                cmd.Parameters.AddWithValue("@show", show);
+
+                if (ds.Tables["chk_scenic"] != null)
                 {
                     ds.Tables["chk_scenic"].Clear();
                 }
 
-                SqlDataAdapter scenic_chk_ada = new SqlDataAdapter(csql, conn);
+                SqlDataAdapter scenic_chk_ada = new SqlDataAdapter();
+                scenic_chk_ada.SelectCommand = cmd;
                 scenic_chk_ada.Fill(ds, "chk_scenic");
                 scenic_chk_ada = null;
 
@@ -223,14 +246,20 @@ namespace SkyView.Service
                     scenic_id = ds.Tables["chk_scenic"].Rows[0]["_SEQ_ID"].ToString();
                     if (img_no.Trim().Length > 0)
                     {
-                        csql = "update "
+                        csql = @"update "
                              + "  scenic_img "
                              + "set "
-                             + "  img_no = '" + scenic_id + "' "
+                             + "  img_no = @scenic_id "
                              + "where "
-                             + "  img_no = '" + img_no + "' ";
+                             + "  img_no = @img_no ";
 
                         cmd.CommandText = csql;
+
+                        ////讓ADO.NET自行判斷型別轉換
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@scenic_id", scenic_id);
+                        cmd.Parameters.AddWithValue("@img_no", img_no);
+
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -268,21 +297,31 @@ namespace SkyView.Service
 
             try
             {
-                csql = "update "
+                csql = @"update "
                      + "  scenic_bt "
                      + "set "
-                     + "  area_id = " + area_id + " "
-                     + ", scenic_name = '" + scenic_name + "' "
-                     + ", longitude = '" + longitude + "' "
-                     + ", latitude = '" + latitude + "' "
-                     + ", scenic_desc = '" + scenic_desc + "' "
-                     + ", status = '" + show + "' "
+                     + "  area_id = @area_id "
+                     + ", scenic_name = @scenic_name "
+                     + ", longitude = @longitude "
+                     + ", latitude = @latitude "
+                     + ", scenic_desc = @scenic_desc "
+                     + ", status = @show "
                      + ", _UPD_ID = 'System' "
                      + ", _UPD_DT = getdate() "
                      + "where "
-                     + "  _SEQ_ID = " + scenic_id + " ";
+                     + "  _SEQ_ID = @scenic_id ";
 
                 cmd.CommandText = csql;
+
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@area_id", area_id);
+                cmd.Parameters.AddWithValue("@scenic_name", scenic_name);
+                cmd.Parameters.AddWithValue("@longitude", longitude);
+                cmd.Parameters.AddWithValue("@latitude", latitude);
+                cmd.Parameters.AddWithValue("@scenic_desc", scenic_desc);
+                cmd.Parameters.AddWithValue("@show", show);
+                cmd.Parameters.AddWithValue("@scenic_id", scenic_id);
+
                 cmd.ExecuteNonQuery();
             }
             catch(Exception ex)
@@ -318,12 +357,16 @@ namespace SkyView.Service
 
             try
             {
-                csql = "delete from "
+                csql = @"delete from "
                      + "  scenic_bt "
                      + "where "
-                     + "  _SEQ_ID = " + scenic_id + " ";
+                     + "  _SEQ_ID = @scenic_id ";
 
                 cmd.CommandText = csql;
+
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@scenic_id", scenic_id);
+
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -358,16 +401,21 @@ namespace SkyView.Service
 
             try
             {
-                csql = "update "
+                csql = @"update "
                      + "  scenic_bt "
                      + "set "
-                     + "  status = '" + status + "' "
+                     + "  status = @status "
                      + ", _UPD_ID = 'System' "
                      + ", _UPD_DT = getdate() "
                      + "where "
-                     + "  _SEQ_ID = " + scenic_id + " ";
+                     + "  _SEQ_ID = @scenic_id ";
 
                 cmd.CommandText = csql;
+
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@status", status);
+                cmd.Parameters.AddWithValue("@scenic_id", scenic_id);
+
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -387,15 +435,15 @@ namespace SkyView.Service
             return c_msg;
         }
 
-        //區域資料
+        //區域資料 
         public DataTable AreaList(string area_id = "")
         {
             string[] carea_id;
             string str_area_id = "";
             carea_id = area_id.Split(',');
-            for(int i=0; i<carea_id.Length; i++)
+            for (int i = 0; i < carea_id.Length; i++)
             {
-                if(i > 0)
+                if (i > 0)
                 {
                     str_area_id = str_area_id + ",";
                 }
@@ -414,12 +462,12 @@ namespace SkyView.Service
                  + "  area_bt "
                  + "where "
                  + "  status = 'Y' ";
-            if(area_id.Trim().Length > 0)
+            if (area_id.Trim().Length > 0)
             {
                 csql = csql + " and _SEQ_ID in (" + str_area_id + ") ";
             }
             csql = csql + "order by _SEQ_ID ";
-          
+
 
             if (ds.Tables["area"] != null)
             {
@@ -453,10 +501,16 @@ namespace SkyView.Service
 
             try
             {
-                csql = "insert into scenic_img(img_no, img_file, img_sty) "
-                     + "values(" + img_no + ",'" + img_file + "','" + img_sty + "')";
+                csql = @"insert into scenic_img(img_no, img_file, img_sty) "
+                     + "values(@img_no ,@img_file ,@img_sty)";
 
                 cmd.CommandText = csql;
+
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@img_no", img_no);
+                cmd.Parameters.AddWithValue("@img_file", img_file);
+                cmd.Parameters.AddWithValue("@img_sty", img_sty);
+
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -490,9 +544,11 @@ namespace SkyView.Service
 
             try
             {
-                csql = "delete from scenic_img where _SEQ_ID = " + img_id + " ";
+                csql = @"delete from scenic_img where _SEQ_ID = @img_id ";
 
                 cmd.CommandText = csql;
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@img_id", img_id);
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -527,16 +583,19 @@ namespace SkyView.Service
 
             try
             {
-                csql = "update "
+                csql = @"update "
                      + "  scenic_bt "
                      + "set "
                      + "  scenic_count = scenic_count + 1 "
                      + ", _UPD_ID = 'System' "
                      + ", _UPD_DT = getdate() "
                      + "where "
-                     + "  _SEQ_ID = " + scenic_id + " ";
+                     + "  _SEQ_ID = @scenic_id ";
 
                 cmd.CommandText = csql;
+
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@scenic_id", scenic_id);
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -571,14 +630,18 @@ namespace SkyView.Service
 
             try
             {
-                csql = "update "
+                csql = @"update "
                      + "  scenic_img "
                      + "set "
-                     + "  img_file = '" + img_file + "' "
+                     + "  img_file = @img_file "
                      + "where "
-                     + "  _SEQ_ID = " + img_id + " ";
+                     + "  _SEQ_ID = @img_id ";
 
                 cmd.CommandText = csql;
+
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@img_file", img_file);
+                cmd.Parameters.AddWithValue("@img_id", img_id);
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -607,9 +670,9 @@ namespace SkyView.Service
             string str_img_no = "";
             cimg_no = img_no.Split(',');
 
-            for (int i = 0; i < cimg_no.Length ; i++)
+            for (int i = 0; i < cimg_no.Length; i++)
             {
-                if(i > 0)
+                if (i > 0)
                 {
                     str_img_no = str_img_no + ",";
                 }
@@ -655,23 +718,33 @@ namespace SkyView.Service
             {
                 conn.Open();
             }
-
-            csql = "select "
+            
+            csql = @"select "
                  + "  * "
                  + "from "
                  + "  member "
                  + "where "
                  + "   status <> 'D' "
-                 + "and account = '" + account + "' "
+                 + "and account = @account "
                  + "order by "
                  + "  _SEQ_ID ";
+
+            
 
             if (dt.Tables["user_info"] != null)
             {
                 dt.Tables["user_info"].Clear();
             }
 
-            SqlDataAdapter user_info_ada = new SqlDataAdapter(csql, conn);
+            SqlDataAdapter user_info_ada = new SqlDataAdapter();
+            SqlCommand CMD = new SqlCommand(csql, conn);
+
+            ////定義parameter型別
+            CMD.Parameters.Clear();
+            //CMD.Parameters.AddWithValue(@account, account);
+            CMD.Parameters.Add("@account", SqlDbType.NVarChar, 15).Value = account; //(參數,宣考型態,長度)
+
+            user_info_ada.SelectCommand = CMD;
             user_info_ada.Fill(dt, "user_info");
             user_info_ada = null;
 
@@ -701,14 +774,22 @@ namespace SkyView.Service
 
             try
             {
-                csql = "update "
+                csql = @"update "
                      + "  member "
                      + "set "
-                     + "  pwd = '" + pwd + "' "
+                     + "  pwd = @pwd "
                      + "where "
-                     + "  account = '" + account + "' ";
+                     + "  account = @account ";
+
 
                 cmd.CommandText = csql;
+
+                ////定義parameter型別
+                cmd.Parameters.Clear();
+
+                cmd.Parameters.Add("@account", SqlDbType.NVarChar, 30).Value = account; //(參數,宣考型態,長度)
+                cmd.Parameters.Add("@pwd", SqlDbType.NVarChar, 30).Value = pwd; //(參數,宣考型態,長度)
+
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
