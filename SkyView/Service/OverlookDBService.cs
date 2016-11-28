@@ -14,6 +14,7 @@ namespace SkyView.Service
         string csql = "";
         DataSet ds = new DataSet();
 
+        #region 景觀資料抓取 List
         /// <summary>
         /// 景觀資料抓取
         /// </summary>
@@ -32,6 +33,9 @@ namespace SkyView.Service
                 conn.Open();
             }
 
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+
             string[] Array_scenic_id;
             string[] Array_area_id;
             string[] Array_area_query;
@@ -41,65 +45,11 @@ namespace SkyView.Service
             string str_area_query = "";
             string str_scenic_query = "";
 
-            if (area_id.Trim().Length > 0)
-            {
-                Array_area_id = area_id.Split(',');
+            Array_area_id = area_id.Split(',');
+            Array_scenic_id = scenic_id.Split(',');
+            Array_area_query = area_query.Split(',');
+            Array_scenic_query = scenic_query.Split(',');
 
-                for (int i = 0; i < Array_area_id.Length; i++)
-                {
-                    if (i > 0)
-                    {
-                        str_area_id = str_area_id + ",";
-                    }
-                    str_area_id = str_area_id + "'" + Array_area_id[i] + "'";
-                }
-            }
-
-            if (scenic_id.Trim().Length > 0)
-            {
-                Array_scenic_id = scenic_id.Split(',');
-
-                for (int i = 0; i < Array_scenic_id.Length; i++)
-                {
-                    if (i > 0)
-                    {
-                        str_scenic_id = str_scenic_id + ",";
-                    }
-                    str_scenic_id = str_scenic_id + " " + Array_scenic_id[i] + " ";
-                }
-            }
-
-            if (area_query.Trim().Length > 0)
-            {
-                Array_area_query = area_query.Split(',');
-                str_area_query = "";
-                str_area_query = str_area_query + "(";
-                for (int i = 0; i < Array_area_query.Length; i++)
-                {
-                    if (i > 0)
-                    {
-                        str_area_query = str_area_query + " or ";
-                    }
-                    str_area_query = str_area_query + " a1.area_name like '%" + Array_area_query[i] + "%' ";
-                }
-                str_area_query = str_area_query + ")";
-            }
-
-            if (scenic_query.Trim().Length > 0)
-            {
-                Array_scenic_query = scenic_query.Split(',');
-                str_scenic_query = "";
-                str_scenic_query = str_scenic_query + "(";
-                for (int i = 0; i < Array_scenic_query.Length; i++)
-                {
-                    if (i > 0)
-                    {
-                        str_scenic_query = str_scenic_query + " or ";
-                    }
-                    str_scenic_query = str_scenic_query + " a1.scenic_name like '%" + Array_scenic_query[i] + "%' ";
-                }
-                str_scenic_query = str_scenic_query + ")";
-            }
             csql = "select "
                  + " a1.* "
                  + "from "
@@ -117,43 +67,128 @@ namespace SkyView.Service
                  + ") a1 "
                  + "where "
                  + "  a1.status <> 'D' ";
+
             if (status.Trim().Length > 0)
             {
-                csql = csql + " and a1.status = '" + status + "' ";
-            }
-            if (str_scenic_id.Trim().Length > 0)
-            {
-                csql = csql + " and a1._SEQ_ID in (" + str_scenic_id + ") ";
+                csql = csql + " and a1.status = @status ";
             }
 
-            if (str_area_id.Trim().Length > 0)
+            if (scenic_id.Trim().Length > 0)
             {
-                csql = csql + " and a1.area_id in (" + str_area_id + ") ";
+                csql = csql + " and a1._SEQ_ID in (";
+                for (int i = 0; i < Array_scenic_id.Length; i++)
+                {
+                    if (i > 0)
+                    {
+                        csql = csql + ",";
+                    }
+                    csql = csql + "@str_scenic_id" + i.ToString();
+                }
+                csql = csql + ") ";
             }
 
-            if (str_area_query.Trim().Length > 0)
+            if (area_id.Trim().Length > 0)
             {
-                csql = csql + " and " + str_area_query + " ";
+                csql = csql + " and a1.area_id in (";
+
+                for (int i = 0; i < Array_area_id.Length; i++)
+                {
+                    if (i > 0)
+                    {
+                        csql = csql + ",";
+                    }
+                    csql = csql + "@str_area_id" + i.ToString();
+                }
+
+                csql = csql + ") ";
             }
 
-            if (str_scenic_query.Trim().Length > 0)
+            if (area_query.Trim().Length > 0)
             {
-                csql = csql + " and " + str_scenic_query + " ";
+                csql = csql + " and (";
+                for (int i = 0; i < Array_area_query.Length; i++)
+                {
+                    if (i > 0)
+                    {
+                        csql = csql + " or ";
+                    }
+                    csql = csql + " a1.area_name like @str_area_query" + i.ToString() + " ";
+                }
+                csql = csql + ") ";
+            }
+
+            if (scenic_query.Trim().Length > 0)
+            {
+                csql = csql + " and (";
+                for (int i = 0; i < Array_scenic_query.Length; i++)
+                {
+                    if (i > 0)
+                    {
+                        csql = csql + " or ";
+                    }
+                    csql = csql + " a1.scenic_name like @str_scenic_query" + i.ToString() + " ";
+                }
+                csql = csql + ") ";
             }
 
             if (sort.Trim().Length > 0)
             {
-                csql = csql + "order by " + sort + " ";
+                csql = csql + " order by " + sort + " ";
             }
+
+            cmd.CommandText = csql;
+
+            //---------------------------------------------------------------//
+            cmd.Parameters.Clear();
+            if (status.Trim().Length > 0)
+            {
+                cmd.Parameters.AddWithValue("@status", status);
+            }
+
+            if (scenic_id.Trim().Length > 0)
+            {
+                for (int i = 0; i < Array_scenic_id.Length; i++)
+                {
+                    cmd.Parameters.AddWithValue("@str_scenic_id" + i.ToString(), Array_scenic_id[i]);
+                }
+            }
+
+            if (area_id.Trim().Length > 0)
+            {
+                for (int i = 0; i < Array_area_id.Length; i++)
+                {
+                    cmd.Parameters.AddWithValue("@str_area_id" + i.ToString(), Array_area_id[i]);
+                }
+            }
+
+            if (area_query.Trim().Length > 0)
+            {
+                for (int i = 0; i < Array_area_query.Length; i++)
+                {
+                    cmd.Parameters.AddWithValue("@str_area_query" + i.ToString(), "%" + Array_area_query[i] + "%");
+                }
+            }
+
+            if (scenic_query.Trim().Length > 0)
+            {
+                for (int i = 0; i < Array_scenic_query.Length; i++)
+                {
+                    cmd.Parameters.AddWithValue("@str_scenic_query" + i.ToString(), "%" + Array_scenic_query[i] + "%");
+                }
+            }
+            //--------------------------------------------------------------//
 
             if (ds.Tables["scenic"] != null)
             {
                 ds.Tables["scenic"].Clear();
             }
 
-            SqlDataAdapter scenic_ada = new SqlDataAdapter(csql, conn);
+            SqlDataAdapter scenic_ada = new SqlDataAdapter();
+            scenic_ada.SelectCommand = cmd;
             scenic_ada.Fill(ds, "scenic");
             scenic_ada = null;
+
+            cmd = null;
 
             if (conn.State == ConnectionState.Open)
             {
@@ -163,7 +198,9 @@ namespace SkyView.Service
 
             return ds.Tables["scenic"];
         }
+        #endregion
 
+        #region 景觀新增 Insert
         //新增
         /// <summary>
         /// 景觀新增
@@ -281,7 +318,9 @@ namespace SkyView.Service
 
             return c_msg;
         }
+        #endregion
 
+        #region 景觀內容更新 Update
         //更新內容
         public string Update(string scenic_id = "",string area_id = "", string scenic_name = "", string longitude = "", string latitude = "", string scenic_desc = "",string show = "")
         {
@@ -341,7 +380,9 @@ namespace SkyView.Service
             return c_msg;
 
         }
+        #endregion
 
+        #region 景觀資料刪除 Del
         public string Del(string scenic_id = "")
         {
             string c_msg = "";
@@ -385,7 +426,9 @@ namespace SkyView.Service
 
             return c_msg;
         }
-        //更新狀態
+        #endregion
+
+        #region 景觀狀態更新 Upd_Status
         public string Upd_Status(string scenic_id = "", string status = "")
         {
             string c_msg = "";
@@ -434,8 +477,9 @@ namespace SkyView.Service
 
             return c_msg;
         }
+        #endregion
 
-        //區域資料 
+        #region 桃園市區域資料 AreaList
         public DataTable AreaList(string area_id = "")
         {
             string[] carea_id;
@@ -456,25 +500,51 @@ namespace SkyView.Service
                 conn.Open();
             }
 
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+
             csql = "select "
                  + "  * "
                  + "from "
                  + "  area_bt "
                  + "where "
                  + "  status = 'Y' ";
+
+            
             if (area_id.Trim().Length > 0)
             {
-                csql = csql + " and _SEQ_ID in (" + str_area_id + ") ";
+                csql = csql + " and _SEQ_ID in (";
+                for (int i = 0; i < carea_id.Length; i++)
+                {
+                    if (i > 0)
+                    {
+                        csql = csql + ",";
+                    }
+                    csql = csql + "@str_area_id" + i.ToString();
+                }
+                csql = csql + ") ";
             }
             csql = csql + "order by _SEQ_ID ";
 
+            cmd.CommandText = csql;
+
+            if (area_id.Trim().Length > 0)
+            {
+                cmd.Parameters.Clear();
+               for (int i = 0; i < carea_id.Length; i++)
+                {
+                    cmd.Parameters.AddWithValue("@str_area_id" + i.ToString(), carea_id[i]);
+                }
+            }
+            
 
             if (ds.Tables["area"] != null)
             {
                 ds.Tables["area"].Clear();
             }
 
-            SqlDataAdapter scenic_ada = new SqlDataAdapter(csql, conn);
+            SqlDataAdapter scenic_ada = new SqlDataAdapter();
+            scenic_ada.SelectCommand = cmd;
             scenic_ada.Fill(ds, "area");
             scenic_ada = null;
 
@@ -486,7 +556,9 @@ namespace SkyView.Service
 
             return ds.Tables["area"];
         }
+        #endregion
 
+        #region 景觀圖片新增 Img_Insert
         public string Img_Insert(string img_no = "", string img_file = "", string img_sty = "")
         {
             string c_msg = "";
@@ -529,7 +601,9 @@ namespace SkyView.Service
 
             return c_msg;
         }
+        #endregion
 
+        #region 景觀圖片刪除 Img_Delete
         public string Img_Delete(string img_id = "")
         {
             string c_msg = "";
@@ -567,7 +641,9 @@ namespace SkyView.Service
 
             return c_msg;
         }
+        #endregion
 
+        #region 景觀觀看次數 add_count
         public string add_count(string scenic_id="")
         {
             string c_msg = "";
@@ -615,7 +691,9 @@ namespace SkyView.Service
             return c_msg;
 
         }
+        #endregion
 
+        #region 景觀圖片更新 Img_Update
         public string Img_Update(string img_id = "", string img_file = "")
         {
             string c_msg = "";
@@ -660,7 +738,9 @@ namespace SkyView.Service
 
             return c_msg;
         }
+        #endregion
 
+        #region 景觀圖片陳列 Img_List
         public DataTable Img_List(string img_no = "", string img_sty = "B")
         {
             DataSet dt = new DataSet();
@@ -684,7 +764,28 @@ namespace SkyView.Service
                 conn.Open();
             }
 
-            csql = "select * from scenic_img where status = 'Y' and img_no in (" + str_img_no + ") and img_sty= '" + img_sty + "' order by _SEQ_ID ";
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+
+            csql = "select * from scenic_img where status = 'Y' and img_no in (";
+            for (int i = 0; i < cimg_no.Length; i++)
+            {
+                if (i > 0)
+                {
+                    csql = csql + ",";
+                }
+                csql = csql + "@str_img_no" + i.ToString() + " ";
+            }
+            csql = csql + ") and img_sty= @img_sty order by _SEQ_ID ";
+
+            cmd.CommandText = csql;
+
+            cmd.Parameters.Clear();
+            cmd.Parameters.AddWithValue("@img_sty",img_sty);
+            for (int i = 0; i < cimg_no.Length; i++)
+            {
+                cmd.Parameters.AddWithValue("@str_img_no" + i.ToString(), cimg_no[i]);
+            }
 
 
             if (dt.Tables["img"] != null)
@@ -692,7 +793,8 @@ namespace SkyView.Service
                 dt.Tables["img"].Clear();
             }
 
-            SqlDataAdapter scenic_ada = new SqlDataAdapter(csql, conn);
+            SqlDataAdapter scenic_ada = new SqlDataAdapter();
+            scenic_ada.SelectCommand = cmd;
             scenic_ada.Fill(dt, "img");
             scenic_ada = null;
 
@@ -707,7 +809,9 @@ namespace SkyView.Service
 
             return d_t;
         }
+        #endregion
 
+        #region 使用者資訊 User_Info
         public DataTable User_Info(string account = "")
         {
             DataSet dt = new DataSet();
@@ -759,7 +863,9 @@ namespace SkyView.Service
 
             return d_t;
         }
+        #endregion
 
+        #region 變更密碼 User_Update
         public string User_Update(string account = "",string pwd = "")
         {
             string c_msg = "";
@@ -808,5 +914,6 @@ namespace SkyView.Service
 
             return c_msg;
         }
+        #endregion
     }
 }
