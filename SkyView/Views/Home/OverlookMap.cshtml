@@ -60,9 +60,13 @@
             @for (i = 0; i < d_lookList.Rows.Count; i++)
             {
                 scenic_id = d_lookList.Rows[i]["_SEQ_ID"].ToString();
-                scenic_name = d_lookList.Rows[i]["scenic_name"].ToString().Substring(0,5) + "...";
+                scenic_name = d_lookList.Rows[i]["scenic_name"].ToString();
                 longitude = d_lookList.Rows[i]["longitude"].ToString();
                 latitude = d_lookList.Rows[i]["latitude"].ToString();
+                if(scenic_name.Trim().Length > 6)
+                {
+                    scenic_name = scenic_name.Substring(0, 5) + "...";
+                }
                 if(d_lookList.Rows[i]["img_file"].ToString().Trim().Length > 0)
                 {
                     img_file = "~/Images/" + d_lookList.Rows[i]["img_file"].ToString();
