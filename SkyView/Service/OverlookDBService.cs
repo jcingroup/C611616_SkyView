@@ -40,10 +40,7 @@ namespace SkyView.Service
             string[] Array_area_id;
             string[] Array_area_query;
             string[] Array_scenic_query;
-            string str_scenic_id = "";
-            string str_area_id = "";
-            string str_area_query = "";
-            string str_scenic_query = "";
+
 
             Array_area_id = area_id.Split(',');
             Array_scenic_id = scenic_id.Split(',');

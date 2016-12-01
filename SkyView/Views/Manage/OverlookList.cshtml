@@ -157,7 +157,7 @@
                 </th>
                 <th>
                     @* 點選排序功能 (點一下遞增 asc, 點兩下遞減 desc) *@
-                    <button class="text-xs-center th-sort-toggle @class_status" name="btn_status" id="btn_status" onclick="sort('status');">狀態</button>
+                    <button class="text-xs-center th-sort-toggle @class_status" name="btn_status" id="btn_status" onclick="sort('status');" >狀態</button>
                 </th>
             </tr>
         </thead>
@@ -185,10 +185,10 @@
 
                     <tr>
                         <td class="text-xs-center">
-                            <button class="btn btn-link btn-lg text-danger" onclick="location.href='Del?scenic_id=@scenic_id'"><i class="fa-times"></i></button>
+                            <button type="button" class="btn btn-link btn-lg text-danger" onclick="location.href='@Url.Content("~/Manage/Del?scenic_id=" + scenic_id)';"><i class="fa-times"></i></button>
                         </td>
                         <td class="text-xs-center">
-                            <button type="button" class="btn btn-link btn-lg" onclick="location.href='Edit?scenic_id=@scenic_id'"><i class="fa-pencil"></i></button>
+                            <button type="button" class="btn btn-link btn-lg" onclick="location.href='@Url.Content("~/Manage/Edit?scenic_id=" + scenic_id)';"><i class="fa-pencil"></i></button>
                         </td>
                         <td class="text-xs-center">@area_name</td>
                         <td class="text-xs-left">&nbsp;@scenic_name</td>
@@ -208,7 +208,7 @@
         </tbody>
     </table>
     <footer class="table-footer clearfix">
-        <button type="button" class="btn btn-sm btn-success pull-xs-left" onclick="location.href='Add'">
+        <button type="button" class="btn btn-sm btn-success pull-xs-left" onclick="location.href='@Url.Content("~/Manage/Add")';">
             <i class="fa-plus-circle"></i> 新增
         </button>
         <small class="pull-xs-right">第 1-10 筆，共 @row_count 筆</small>
