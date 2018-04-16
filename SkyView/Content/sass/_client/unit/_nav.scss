@@ -1,0 +1,243 @@
+@charset "UTF-8";
+
+// setting
+// ------------------------------------------------------------
+// navbar style
+$navbar-height:         76px !default;
+$navbar-bg:             false !default; // #2AA19D
+
+// nav style
+$sub-nav-has:           false !default;    // 子選單
+$nav-root:              if($sub-nav-has, '.root', 'a') !default;
+$nav-height:            'full' !default;   // 'full' | 18px | flase
+$nav-font-size:         18px !default;
+$nav-color:             false !default;
+
+// 行動版
+$mobile-menu-bk:        'desktop' !default;     // 從()螢幕寬度以下開始出現行動版選單
+$mobile-menu-style:     'overlay' !default; // overlay(滿版)；push(推動)
+$mobile-menu-bg:        rgba(#000,.8) !default;
+$mobile-menu-width:     100% !default;
+$mobile-close:          'mobile-close' !default;
+$mobile-transition:     'transform .3s, opacity 1s' !default; // push - left .35s; overlay - opacity 1s
+
+// 當前頁選單
+@function page($current-item, $map: $menu-item) {
+    $current: ();
+
+    @each $item in $map {
+        $i: index($map, $item);
+        $current: $current, unquote(".#{$item} #{$current-item}(#{$i})");
+    }
+    @return $current;
+}
+$current: page('&:nth-of-type');
+
+// main
+// ------------------------------------------------------------
+// 主選單
+.navbar {
+    @if $navbar-height { height: $navbar-height }
+    @if $navbar-bg     { background: $navbar-bg }
+}
+
+#menu {
+    z-index: z(menu);
+
+    // 本次專案
+    @if $index {
+        @include mq($mobile-menu-bk) {
+            text-align: left;
+            margin-top: 75px;
+            width: 125px;
+        }
+    }
+    @if $page {
+        @extend %float-r;
+    }
+
+    #{$nav-root} {
+        @if $nav-color     { color: $nav-color; }
+        @if $nav-font-size { font-size: em($nav-font-size); }
+        @if $nav-height {
+            height: if($nav-height == 'full', 100%, $nav-height);
+            @if $nav-height == 'full' {
+                @include text-middle($navbar-height);
+            }
+        }
+
+        // 本次專案
+        letter-spacing: 3px;
+
+        @if $index {
+            @extend .m-y-24;
+            display: block;
+            &.home { @extend .hidden; }
+        }
+        @if $page {
+            @extend .p-x-24;
+
+            display: inline-block;
+
+            #{$current} {
+                border-radius: 0 0 5px 5px;
+                color: #1F3D2D;
+                text-shadow: 1px 1px 0 rgba(#fff,.6);
+            }
+            .Overlook &:nth-of-type(1) { background: $brand-primary; }
+            // .Overview &:nth-of-type(2) { background: $warning; }
+            .AboutUs &:nth-of-type(2) { background: $danger; }
+            .Sitemap &:nth-of-type(3) { background: $info; }
+        }
+    }
+}
+
+// mobile-nav
+@if $enable-RWD {
+    // 行動版面的選單
+    @include mobile-nav('menu',break(#{$mobile-menu-bk},-1)) {
+        @if $index {
+            right: 0;
+            left: 0;
+        }
+
+        @if $page {
+            top: $navbar-height + 20;
+            right: $gutter;
+            left: $gutter;
+        }
+
+        #{$nav-root} {
+            font-size: em(25);
+
+            @if $page {
+                display: block;
+                #{$current} { border-radius: 5px; }
+            }
+        }
+    }
+
+    %mobile-btn {
+        background: none;
+        border: none;
+        outline: none;
+        padding: 0;
+        font-size: em(42);
+        color: #fff;
+    }
+
+    // 顯示行動版面的按鈕
+    .mobile-trigger {
+        display: none;
+        overflow: hidden;
+
+        @include mq-max(break(#{$mobile-menu-bk},-1)) {
+            display: block;
+        }
+
+        // 本次專案
+        @extend %mobile-btn;
+        @include absolute(right 10px);
+        @include transition(background .3s);
+
+        @if $index { top: 40px; }
+        @if $page { top: 12px; }
+
+        &:hover, &:active { background: $brand-primary; }
+
+        .#{$mobile-menu-style} & {
+            opacity: 0;
+        }
+
+        @include mq-max(360px) {
+            right: 1%; top: 1.2%;
+            font-size: em(32);
+        }
+    }
+
+    // 關閉行動版面的按鈕
+    @if $mobile-close {
+        .#{$mobile-close} {
+            display: none;
+
+            .#{$mobile-menu-style} & {
+                display: block;
+                position: absolute;
+                @extend %mobile-btn;
+
+                &:hover, &:active { color: $warning; }
+
+                @include mq-max(360px) {
+                    right: 0;
+                    @if $index { top: -125px; }
+                }
+
+                @if $index {
+                    right: 2%;
+                    top: -95px;
+                }
+                @if $page {
+                    right: 0;
+                    top: -80px;
+                }
+            }
+        }
+    }
+
+    // 本次專案-overlay版
+    .#{$mobile-menu-style} {
+        #header {
+            z-index: z(overlay);
+        }
+    }
+}
+
+// 第二層選單
+@if $sub-nav-has {
+    #menu {
+        li {
+            // 子選單顯示
+            &:hover, &:active {
+                .sub-nav {
+                    opacity: 1;
+                    visibility: visible;
+                    min-height: 150px;
+                }
+            }
+        }
+        // 有下拉選單的加箭頭
+        .caret {
+            position: relative;
+
+            @include el(before) {
+                @include arrow(up, 10px, 7px, #fff);
+                @include pos-center(x);
+                @include transition(opacity .5s, bottom .3s);
+                opacity: 0;
+                bottom: -8px;
+            }
+        }
+    }
+    .sub-nav {
+        @extend .text-left;
+
+        display: block;
+        opacity: 0;
+        visibility: hidden;
+
+        @if $enable-RWD {
+            @include mq-max(break(#{$mobile-menu-bk},-1)) {
+                display: none;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                position: static;
+                top: 100%;
+                max-width: 100%;
+
+                background: darken($mobile-menu-bg,10);
+                box-shadow: inset 3px 6px 15px rgba(#000,.5);
+            }
+        }
+    }
+}

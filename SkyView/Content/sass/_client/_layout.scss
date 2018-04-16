@@ -1,0 +1,223 @@
+@charset "UTF-8";
+
+
+/*      layout
+-----------------------------------------------------------------------*/
+// 置中(有最大寬度限制,非滿版才需要)
+%center {
+    max-width: $max-width;
+    margin: 0 $gutter*3;
+    @include mq(wider) { margin: 0 auto; }
+
+    @if $enable-RWD {
+        @include mq-max(tablet) { margin: 0; }
+    } @else {
+        @include mq-max(break(wider,-1)) {
+            margin: 0;
+            padding-left: $gutter*2;
+            padding-right: $gutter*2;
+        }
+    }
+}
+// 容器
+%contain {
+    @extend %clearfix;
+
+    @if $enable-RWD {
+        @include mq-max(tablet) {
+            padding-left: $gutter;
+            padding-right: $gutter;
+        }
+    } @else {
+        min-width: $min-width;
+    }
+}
+
+.wrap {
+    @extend %center, %contain;
+}
+
+#header, #main, #footer {
+    @extend %contain;
+    position: relative;
+}
+
+#wrapper {
+    @if $lte7 { _height: 100%; }
+    min-height: 100%;
+    padding-bottom: $footer-height + $content-spacing; // 內容與footer間距
+
+    @if $wrapper-bg     { background: $wrapper-bg; }
+    @if not $enable-RWD { min-width: $min-width; }
+    @if $enable-RWD {
+        @include mq-max(break(desktop,-1)) {
+            padding-bottom: $content-spacing;
+            min-height: auto;
+        }
+    }
+
+    @if $index {
+        @extend %center, %contain;
+    }
+    @if $page {
+        @include el(before) {
+            @include absolute(left 0 right 0 top 0);
+            height: 71px;
+            background: #000;
+        }
+    }
+}
+
+
+// header
+// ----------------------------------------------------------------------
+#header {
+    @if $header-bg     { background: $header-bg; }
+    @if $header-height { height: $header-height; }
+    z-index: z(header);
+
+    // 本次專案
+    @if $index {
+        @extend %float-l;
+        @include mq(wide) { width: 20%; }
+        @include mq(desktop, break(wide,-1)) { width: 28%; }
+    }
+    @if $page {
+        @extend %center;
+    }
+}
+
+.logo {
+    cursor: pointer; cursor: hand; // for ie
+    z-index: z(logo);
+
+    @if $logo-img {
+        @include text-pic($logo-img, nth($logo-size,1), nth($logo-size,2), $position:center);
+    }
+
+    // 本次專案
+    @if $index { margin-top: 36px; }
+    @if $page { @extend %float-l, .m-t-12; }
+}
+
+
+// footer 頁腳
+// ----------------------------------------------------------------------
+#footer {
+    @if $footer-bg { background: $footer-bg; }
+    z-index: z(footer);
+    min-height: $footer-height;
+    margin-top: -($footer-height);
+
+    @if $enable-RWD {
+        @include mq-max(break(desktop,-1)) {
+            margin-top: 0;
+        }
+    }
+
+    // 本次專案樣式
+    @extend .p-y-32;
+    border-top: 3px solid #20494D;
+
+    @if $index {
+        .wrap { position: relative; }
+    }
+}
+
+// 區域導覽
+.foot-nav {
+    @extend %clearfix, .text-left;
+
+    h2 {
+        font-size: em(27);
+        letter-spacing: 2px;
+
+        @include mq-max(break(desktop,-1)) {
+            padding-left: 0;
+        }
+    }
+    small {
+        @extend .m-t-12;
+        display: block;
+        font-size: em(20,27);
+        letter-spacing: 1px;
+    }
+    nav {
+        @include mq-max(break(desktop,-1)) {
+            padding-right: 0;
+        }
+        @include mq-max(phone) {
+            padding-left: 0;
+        }
+    }
+    a {
+        @extend .m-b-12;
+        display: inline-block;
+        width: 19%;
+        letter-spacing: 1px;
+
+        @include mq-max(break(desktop,-1)) {
+            text-align: center;
+            width: 62px;
+        }
+        @include mq-max(phone) {
+            text-align: left;
+        }
+    }
+    @include mq-max(break(desktop,-1)) {
+        margin-bottom: 18px;
+    }
+}
+// address
+.foot-contact {
+    @extend .text-left, .font-tiny;
+    font-style: normal;
+
+    @if $index {
+        @extend .p-l-0;
+
+        @include mq(desktop) {
+            @include absolute(left 0 top -345px);
+            width: 243px;
+            padding-top: 38px;
+            background: url(#{$img-index}/icon-bird.gif) right 0 no-repeat;
+
+            p:first-child {
+                padding-top: 16px;
+                border-top: 1px solid #444;
+                width: 97%;
+            }
+        }
+        @include mq(desktop, break(wide,-1)) {
+            top: -260px;
+        }
+    }
+
+    em {
+        @extend .m-r-8;
+        font-style: normal;
+    }
+    p + p {
+        @extend .m-t-8;
+    }
+
+    @include mq-max(break(desktop,-1)) {
+        clear: both;
+    }
+    @include mq-max(tablet) {
+        padding-left: 0;
+    }
+}
+.copyright {
+    padding-top: 25px;
+    font-size: em(12);
+    color: #ccc;
+    border-top: 1px solid #333333;
+
+    @include mq(desktop) {
+        margin-top: 55px;
+    }
+    @include mq-max(break(desktop,-1)) {
+        margin-top: 30px;
+    }
+}

@@ -1,0 +1,85 @@
+﻿@charset "UTF-8";
+
+
+// == config
+// ----------------------------------------------------------------------
+$img-path:              '../images' !default;
+$font-path:             '../font' !default;
+$index:                 false !default;           // 首頁用
+$page:                  false !default;           // 內頁用
+$enable-RWD:            true;
+
+
+// == helper/variables
+// ----------------------------------------------------------------------
+$body-bg:               #2A2B2E;
+$body-color:            #fff;
+$font-family-sp:        'Fenix', serif;
+$link-color:            #fff;
+$link-hover-color:      $brand-primary;
+
+$font-size-h1:          45px;
+// $headings-color:        $brand-primary !default;
+
+
+// == layout
+// ----------------------------------------------------------------------
+$min-width:             1008px;     // 網頁最小尺寸
+$max-width:             1400px;     // 網頁最寬尺寸: .wrap
+$menu-item:             'Overlook' 'AboutUs' 'Sitemap'; // 'Overview' - 隱藏
+
+$wrapper-bg:            false !default;
+$content-spacing:       60px !default;
+
+// header
+$header-height:         71px !default;
+$header-bg:             false !default;
+
+// banner
+$banner-height:         350px !default;
+
+// logo
+$logo-img:              'logo.gif' !default; // 'logo.gif' or false
+$logo-size:             195px 53px !default;
+
+// footer
+$footer-height:         270px !default;
+$footer-bg:             #232326 !default;
+$footer-color:          false !default; //#63889D;
+
+// z-index
+$z-index: (
+    header:             4,
+    main:               1,
+    footer:             3,
+    sidebar:            2,
+    banner:             4,
+    logo:               10,
+    menu:               20,
+    figure:             1,
+    dropdown:           21,
+    tooltip:            22,
+    modal:              23,
+    toggle:             25,
+    goTop:              99,
+    overlay:            999
+);
+
+
+// == unit
+// ----------------------------------------------------------------------
+// btn
+$btn-border-radius:            false;
+$btn-pd:                       8px 20px;
+$btn-hover-bg:                 darken($brand-secondary,15);
+$btn-styles: (
+    text-shadow: 1px 1px 1px rgba(#000,.35)
+);
+
+// figure
+$figure-inline-hack:           false;
+
+
+// == base
+// ----------------------------------------------------------------------
+

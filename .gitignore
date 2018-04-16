@@ -243,8 +243,5 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
-/SkyView/Content/sass
-/SkyView/Content/sass-sys
 /SkyView/ckeditor
-/SkyView/Content/doc
 /SkyView/Images

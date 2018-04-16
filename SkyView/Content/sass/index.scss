@@ -1,0 +1,89 @@
+@charset "UTF-8";
+
+// 本頁專用變數(覆蓋)
+// ------------------------------------------------------------
+$index:                  true;
+$img-index:              '../images/index';
+
+$content-spacing:        60px;
+
+$font-size-h3:           26px;
+$header-height:          false;
+$logo-img:               'index/logo.gif';
+$logo-size:              235px 81px;
+
+$navbar-height:          false;
+$nav-height:             false;
+$nav-font-size:          17px;
+
+
+// import
+// ------------------------------------------------------------
+// 本次專案專用變數
+@import "_client/color";
+@import "_client/settings";
+
+// 共用
+@import "helper/function";
+@import "helper/variables";
+@import "helper/mixins";
+
+// 由此 output css
+@import "vendor/normalize"; // 重置復位
+@import "vendor/print";     // 列印樣式
+
+@import "base/basic";
+@import "base/util";
+
+// 本頁專用
+@import "_client/layout";
+@import "_client/unit/nav";
+@import "_client/unit/banner";
+@import "_client/unit/classes";
+
+
+// main
+// ------------------------------------------------------------
+#main {
+    @extend %float-r, .text-left;
+
+    @include mq(wide) { width: 76%; }
+    @include mq(desktop, break(wide,-1)) { width: 70%; }
+
+    @include el(all) {
+        position: absolute;
+
+        @include mq-max(tablet) { background-size: cover; }
+        @include mq-max(phone-plus) { display: none; }
+    }
+    &::before {
+        top: 0;
+        background: url(#{$img-index}/bannerBg.gif) 0 0 no-repeat;
+        width: 66px;
+        height: 410px;
+
+        @include mq(break(tablet,+1)) {
+            left: -66px;
+        }
+    }
+    &::after {
+        top: 23px;
+        background: url(#{$img-index}/bannerBg2.gif) 0 0 no-repeat;
+        width: 35px;
+        height: 449px;
+
+        @include mq(break(tablet,+1)) {
+            right: -35px;
+        }
+        @include mq-max(tablet) {
+            right: -($gutter);
+            height: 330px;
+        }
+    }
+}
+
+@include mq-max(break(desktop,-1)) {
+    #header, #main {
+        width: 100%;
+    }
+}

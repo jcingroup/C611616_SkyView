@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+#banner {
+    position: relative;
+
+    img { width: 100%; }
+
+    h3 { @extend .m-t-16; letter-spacing: 2px; }
+    ul { @extend %list-unstyled; }
+}

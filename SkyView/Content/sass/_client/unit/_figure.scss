@@ -1,0 +1,103 @@
+@charset "UTF-8";
+
+@charset "UTF-8";
+
+$figure-inline-hack:      false !default;
+$figure-effect:           false !default;
+$figure-margin:           0 !default;
+
+// common style
+%figure-overlay {
+    @include size(100%);
+    @include absolute(left 0 top 0);
+}
+
+figcaption {
+    @include prefix(backface-visibility, hidden);
+    &::before, &::after { pointer-events: none; }
+}
+
+figure {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    margin: $figure-margin;
+
+    @if $figure-inline-hack {
+        margin-right: -4px;
+        &:first-child { margin-left: -4px; }
+    }
+
+    @if $figure-effect { @include transition($figure-effect) }
+
+    > a {
+        @extend %figure-overlay;
+        z-index: z(figure);
+        opacity: 0;
+    }
+
+    // RWD
+    @if $enable-RWD {
+        @include mq-max(break(desktop, -1)) {
+            float: none;
+            display: inline-block;
+        }
+        @include mq-max(tablet) {
+            width: 48%;
+            max-width: none;
+            margin: 3px;
+            margin-bottom: 15px;
+        }
+        @include mq-max(phone) {
+            width: 100%;
+        }
+    }
+}
+
+// 最新消息
+// .news-list {
+//     max-width: 350px;
+
+//     @if $index {
+//         @extend .m-a-0;
+//         &:not(:last-child) { margin-right: 70px; }
+//     }
+//     @if $page {
+//         @extend .m-b-24, .m-x-16;
+//     }
+
+//     figcaption {
+//         @extend %clearfix, .p-a-12, .text-left, .m-t-4;
+//         position: relative;
+//         height: 220px;
+//         background: #FFF9A7;
+//     }
+//     img {
+//         min-width: 100%;
+//         max-height: 270px;
+//         min-height: 270px;
+//         @include transition(transform .5s, filter 1s);
+//     }
+//     h3 { @extend .m-b-8; }
+//     p { @extend .font-lg; }
+//     .btn {
+//         @extend .m-t-24;
+//         @include absolute(right 12px bottom 12px);
+//         background: #fef272;
+//         color: #595959;
+//         text-shadow: none;
+//         z-index: z(figure) + 1;
+
+//         &:hover, &:active {
+//             background: darken($brand-secondary,15);
+//             color: #fff;
+//         }
+//     }
+
+//     &:hover, &:active {
+//         img {
+//             @include transform(scale(1.1));
+//             @include prefix(filter, brightness(1.2));
+//         }
+//     }
+// }
